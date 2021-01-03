@@ -30,38 +30,38 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 LSS += \
-I2C.lss \
+I2C_Slave.lss \
 
 SIZEDUMMY += \
 sizedummy \
 
 
 # All Target
-all: I2C.elf secondary-outputs
+all: I2C_Slave.elf secondary-outputs
 
 # Tool invocations
-I2C.elf: $(OBJS) $(USER_OBJS)
+I2C_Slave.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,I2C.map -mmcu=atmega32 -o "I2C.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,I2C_Slave.map -mmcu=atmega32 -o "I2C_Slave.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-I2C.lss: I2C.elf
+I2C_Slave.lss: I2C_Slave.elf
 	@echo 'Invoking: AVR Create Extended Listing'
-	-avr-objdump -h -S I2C.elf  >"I2C.lss"
+	-avr-objdump -h -S I2C_Slave.elf  >"I2C_Slave.lss"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-sizedummy: I2C.elf
+sizedummy: I2C_Slave.elf
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega32 I2C.elf
+	-avr-size --format=avr --mcu=atmega32 I2C_Slave.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) I2C.elf
+	-$(RM) $(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) I2C_Slave.elf
 	-@echo ' '
 
 secondary-outputs: $(LSS) $(SIZEDUMMY)

@@ -47,17 +47,17 @@ void LCD_I2C_init(void)
 	I2C_send_start();
 	I2C_select_slave(5,0);
 	_delay_ms(100);
-	I2C_send_data(command);
+	I2C_Master_send_data(command);
 	_delay_ms(100);
-	I2C_send_data(0b00111000);
+	I2C_Master_send_data(0b00111000);
 	_delay_ms(100);
-	I2C_send_data(command);
+	I2C_Master_send_data(command);
 	_delay_ms(100);
-	I2C_send_data(0b00001100);
+	I2C_Master_send_data(0b00001100);
 	_delay_ms(100);
-	I2C_send_data(command);
+	I2C_Master_send_data(command);
 	_delay_ms(100);
-	I2C_send_data(0b00000001);
+	I2C_Master_send_data(0b00000001);
 	_delay_ms(10);
 	I2C_stop();
 }
@@ -68,13 +68,13 @@ void LCD_I2C_send_NUM(u16 Copy_num)
 		I2C_send_start();
 		I2C_select_slave(5,0);
 		_delay_ms(200);
-		I2C_send_data(Num);
+		I2C_Master_send_data(Num);
 		_delay_ms(200);
-		I2C_send_data(LSB);
+		I2C_Master_send_data(LSB);
 		if (MSB==0)
 		{I2C_stop();}
 		else {_delay_ms(200);
-		I2C_send_data(MSB);I2C_stop();}
+		I2C_Master_send_data(MSB);I2C_stop();}
 }
 
 
@@ -83,15 +83,15 @@ void LCD_I2C_send_str(u8* Copy_str)
 		I2C_send_start();
 		I2C_select_slave(5,0);
 		_delay_ms(100);
-		I2C_send_data(Str);
+		I2C_Master_send_data(Str);
 		_delay_ms(100);
 		while(Copy_str[i]!='\0')
 		{
-		I2C_send_data(Copy_str[i]);
+		I2C_Master_send_data(Copy_str[i]);
 		i++;
 		_delay_ms(100);
 		}
-		I2C_send_data('\0');
+		I2C_Master_send_data('\0');
 		I2C_stop();
 }
 
@@ -100,9 +100,9 @@ void LCD_I2C_send_Command(u8 Copy_com)
 	I2C_send_start();
 	I2C_select_slave(5,0);
 	_delay_ms(100);
-	I2C_send_data(command);
+	I2C_Master_send_data(command);
 	_delay_ms(100);
-	I2C_send_data(Copy_com);
+	I2C_Master_send_data(Copy_com);
 	I2C_stop();
 
 }

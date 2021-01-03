@@ -31,7 +31,7 @@
 	 return status;
  }
 
- u8 I2C_send_data(u8 Copy_data)
+ u8 I2C_Master_send_data(u8 Copy_data)
  {
 
 	 TWDR =Copy_data;
@@ -42,35 +42,45 @@
 
  }
 
- u8 I2C_recive_data(u8 *status)
- {u8 Temp=0;
- 	 TWCR=(1<<TWINT)|(1<<TWEN)|(1<<TWEA)  ;
- 	 //while ((TWSR&0xf8) != 0x60) ;   // status =received data
- 	 while (GET_BIT(TWCR,TWINT)==0);  // wait flag
-	 Temp=TWDR;
-	 if ((TWSR & 0xF8) != 50){*status= 0;}
-	 	 else{*status= 1;}
-	 return Temp;
 
- }
+ u8 I2C_Slave_recive_data(u8 *status)
+  {u8 Temp=0;
+
+
+  	 TWCR=(1<<TWINT)|(1<<TWEN)|(1<<TWEA)  ;
+  	 while (GET_BIT(TWCR,TWINT)==0);  // wait flag
+
+  	 if((TWSR & 0xf8) == 0x60)   // status =received address
+  	 {
+  		 TWCR=(1<<TWINT)|(1<<TWEN)|(1<<TWEA)  ;  //start again to skip the address byte
+  		 while (GET_BIT(TWCR,TWINT)==0);  // wait flag
+  		 Temp=TWDR;
+  	 }
+  	 else
+  	 {Temp=TWDR;}
+
+  	if (status!= NULL)
+  	{if ((TWSR & 0xF8) != 80){*status= 0;}
+  	else{*status= 1;}
+  	}
+  	return Temp;
+  }
 void I2C_stop(void )
 {
 	TWCR=(1<<TWINT)|(1<<TWEN)|(1<<TWSTO);
-	//while(!(TWCR&(1<<TWSTO)));  // wait till slop flag
 }
 
 void I2C_master_init(void )
 {
 	TWSR=(0<<TWPS0)|(0<<TWPS1);     //prescaler
 	TWBR=32;		  // bit rate
-	TWAR=10;       /// 0000 or 1111
-	//TWCR=(1<<TWEN)|(1<<TWEA);
+	TWAR=10;       /// any address except 0000 or 1111
 }
 
 
 void I2C_slave_init(void )
 {
-	TWAR=5<<1;     /// 0000 or 1111   address
-	TWCR=(1<<TWEN)|(1<<TWEA);
-}
+	TWAR=5<<1;                     /// 0000 or 1111   address
+	TWCR=(1<<TWINT)|(1<<TWEN)|(1<<TWEA);
 
+}
