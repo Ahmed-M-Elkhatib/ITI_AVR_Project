@@ -20,8 +20,8 @@ void main (void)
 {u8 byte1=0,byte2=0;
  u8 arr[20]={0};
  u8 i=0;
- 	 LCD_PORT_init();
-	I2C_slave_init();
+ LCD_PORT_init();
+ I2C_slave_init();
 
 while(1)
 {

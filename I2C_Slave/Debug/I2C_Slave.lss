@@ -3363,9 +3363,9 @@ void main (void)
     17b8:	e9 f7       	brne	.-6      	; 0x17b4 <main+0x22>
  u8 i=0;
     17ba:	19 82       	std	Y+1, r1	; 0x01
- 	 LCD_PORT_init();
+ LCD_PORT_init();
     17bc:	0e 94 51 0c 	call	0x18a2	; 0x18a2 <LCD_PORT_init>
-	I2C_slave_init();
+ I2C_slave_init();
     17c0:	0e 94 ba 0b 	call	0x1774	; 0x1774 <I2C_slave_init>
 
 while(1)
