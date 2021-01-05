@@ -10,9 +10,9 @@
 #include "LCD_interface.h"
 #include "avr/delay.h"
 #include "LCD_cofig.h"
-#define Num   	1
-#define Str   	2
-#define command 3
+#define Num   	0
+#define Str   	4
+#define command 5
 u8 flag=0;
 void Receive_2Byte(u8* Copy_char,u8* Copy_command);
 void LCD_PORT_init(void);

@@ -33,7 +33,7 @@ void LCD_I2C_init(u8 *Copy_u8CommandArray,u8 Copy_u8Size)
 	I2C_master_init();
 	_delay_ms(120);
 	I2C_send_start();
-	I2C_select_slave(5,0);
+	I2C_select_slave(LCD_I2C_Slave_Address,0);
 	/*
 	_delay_ms(100);
 	I2C_Master_send_data(command);
@@ -53,6 +53,8 @@ void LCD_I2C_init(u8 *Copy_u8CommandArray,u8 Copy_u8Size)
 		I2C_Master_send_data(LCD_I2C_Command);
 		_delay_ms(100);
 		I2C_Master_send_data(Copy_u8CommandArray[i]);
+		_delay_ms(10);
+	//	I2C_send_start();
 	}
 	_delay_ms(10);
 	I2C_stop();
@@ -70,7 +72,7 @@ void LCD_I2C_SendNum(s16 Copy_u16num){
 	u8 MSB= (u8)(Copy_u16num>>8);
 	// Start the transmission
 	I2C_send_start();
-	I2C_select_slave(5,0);
+	I2C_select_slave(LCD_I2C_Slave_Address,0);
 	_delay_ms(200);
 
 	if(signindicate){
@@ -121,7 +123,7 @@ void LCD_I2C_SendString(u8* Copy_u8str)
 void LCD_I2C_SendCommand(u8 Copy_u8Command)
 {
 	I2C_send_start();
-	I2C_select_slave(5,0);
+	I2C_select_slave(LCD_I2C_Slave_Address,0);
 	_delay_ms(100);
 
 	I2C_Master_send_data(LCD_I2C_Command);
@@ -135,7 +137,7 @@ void LCD_I2C_SendCommand(u8 Copy_u8Command)
 void LCD_I2C_SendData(u8 Copy_u8Data)
 {
 	I2C_send_start();
-	I2C_select_slave(5,0);
+	I2C_select_slave(LCD_I2C_Slave_Address,0);
 	_delay_ms(100);
 
 	I2C_Master_send_data(LCD_I2C_Data);
@@ -165,7 +167,7 @@ void LCD_I2C_SendFloat(f32 Copy_u8Fnum){
 	//mantissa = mantissa & 0x000007FFFFF;
 	// Start the transmission
 	I2C_send_start();
-	I2C_select_slave(5,0);
+	I2C_select_slave(LCD_I2C_Slave_Address,0);
 	_delay_ms(200);
 
 	if(signindicate){
@@ -232,7 +234,7 @@ void LCD_I2C_WriteInCGRAM(u8 *Copy_U8ptr)
 	I2C_master_init();
 	_delay_ms(120);
 	I2C_send_start();
-	I2C_select_slave(5,0);
+	I2C_select_slave(LCD_I2C_Slave_Address,0);
 	_delay_ms(100);
 	I2C_Master_send_data(LCD_I2C_CGRAMData);
 
