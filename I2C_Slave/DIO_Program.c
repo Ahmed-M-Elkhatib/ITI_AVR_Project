@@ -64,7 +64,7 @@ void DIO_VidSetPin_Value(u8 Copy_u8Port,u8 Copy_u8Pin,u8 Copy_u8Value)
 }
 	
 	u8 DIO_VidGetPin(u8 Copy_u8Port,u8 Copy_u8Pin)
-	{	u8 bit;
+	{	u8 bit=0;
 		switch(Copy_u8Port)
 		{case 0:
 		bit=GET_BIT( PINA,Copy_u8Pin) ;break;
