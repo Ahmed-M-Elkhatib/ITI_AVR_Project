@@ -7,18 +7,21 @@ C_SRCS += \
 ../DIO_Program.c \
 ../I2C_Program.c \
 ../I2C_main_slave.c \
+../LCDI2C_slave.c \
 ../LCD_program.c 
 
 OBJS += \
 ./DIO_Program.o \
 ./I2C_Program.o \
 ./I2C_main_slave.o \
+./LCDI2C_slave.o \
 ./LCD_program.o 
 
 C_DEPS += \
 ./DIO_Program.d \
 ./I2C_Program.d \
 ./I2C_main_slave.d \
+./LCDI2C_slave.d \
 ./LCD_program.d 
 
 
