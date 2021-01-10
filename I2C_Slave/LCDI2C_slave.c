@@ -8,7 +8,11 @@
 #include "I2C_Interface.h"
 #include "LCDI2C_slave.h"
 
-extern u8 flag;   // what does this do ?
+extern u8 flag;   // what does this do ? //this flag to determine the first byte ( command) at only the first receive operation then all received
+										//data will received in byte2 (as temp variable)
+									   // so when flag ==0 this means that i have new connection and i need to read byte1 to know the required action
+									  // then when flag==1 this means all data we receiving now are data and i don,t need to byte 1 just all data
+									 //will received by byte2 as a temp variable
 
 
 void Receive_2Byte(u8* Copy_byte1,u8* Copy_byte2)
