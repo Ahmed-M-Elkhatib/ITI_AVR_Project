@@ -24,7 +24,7 @@ u8 buffer[SLAVE_BUFFER_SIZE]={0};
 u8 buffer_index=0;
 
 u8 byte1=0,byte2=0;
-u8 flag=0;
+u8 flag=0;       // this flag to
 
 int main (void)
 {

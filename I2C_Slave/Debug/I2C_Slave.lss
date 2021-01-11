@@ -9,27 +9,27 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   2 .bss          0000002c  00800068  00800068  00002640  2**0
                   ALLOC
-  3 .stab         00001e78  00000000  00000000  00002640  2**2
+  3 .stab         00002004  00000000  00000000  00002640  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000cc5  00000000  00000000  000044b8  2**0
+  4 .stabstr      000010af  00000000  00000000  00004644  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_aranges 00000140  00000000  00000000  0000517d  2**0
+  5 .debug_aranges 00000140  00000000  00000000  000056f3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_pubnames 00000170  00000000  00000000  000052bd  2**0
+  6 .debug_pubnames 00000170  00000000  00000000  00005833  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00001c49  00000000  00000000  0000542d  2**0
+  7 .debug_info   00001c49  00000000  00000000  000059a3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00000eeb  00000000  00000000  00007076  2**0
+  8 .debug_abbrev 00000eeb  00000000  00000000  000075ec  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000dad  00000000  00000000  00007f61  2**0
+  9 .debug_line   00000dad  00000000  00000000  000084d7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000160  00000000  00000000  00008d10  2**2
+ 10 .debug_frame  00000160  00000000  00000000  00009284  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    0000028d  00000000  00000000  00008e70  2**0
+ 11 .debug_str    0000028d  00000000  00000000  000093e4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    000007ce  00000000  00000000  000090fd  2**0
+ 12 .debug_loc    000007ce  00000000  00000000  00009671  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000050  00000000  00000000  000098cb  2**0
+ 13 .debug_ranges 00000050  00000000  00000000  00009e3f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -2034,7 +2034,7 @@ void DIO_VidSetPin_Value(u8 Copy_u8Port,u8 Copy_u8Pin,u8 Copy_u8Value)
 00000f46 <DIO_VidGetPin>:
 	
 	u8 DIO_VidGetPin(u8 Copy_u8Port,u8 Copy_u8Pin)
-	{	u8 bit;
+	{	u8 bit=0;
      f46:	df 93       	push	r29
      f48:	cf 93       	push	r28
      f4a:	00 d0       	rcall	.+0      	; 0xf4c <DIO_VidGetPin+0x6>
@@ -3336,7 +3336,7 @@ void I2C_slave_init(void )
 00001792 <main>:
 
 u8 byte1=0,byte2=0;
-u8 flag=0;
+u8 flag=0;       // this flag to
 
 int main (void)
 {
@@ -3406,8 +3406,8 @@ int main (void)
     17f8:	d4 cf       	rjmp	.-88     	; 0x17a2 <main+0x10>
 
 000017fa <Receive_2Byte>:
-
-extern u8 flag;   // what does this do ?
+									  // then when flag==1 this means all data we receiving now are data and i don,t need to byte 1 just all data
+									 //will received by byte2 as a temp variable
 
 
 void Receive_2Byte(u8* Copy_byte1,u8* Copy_byte2)
@@ -3587,12 +3587,6 @@ void LCD_VidSendData(u8 Copy_u8Data)
     1904:	9a 8f       	std	Y+26, r25	; 0x1a
     1906:	ab 8f       	std	Y+27, r26	; 0x1b
     1908:	bc 8f       	std	Y+28, r27	; 0x1c
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     190a:	69 8d       	ldd	r22, Y+25	; 0x19
     190c:	7a 8d       	ldd	r23, Y+26	; 0x1a
     190e:	8b 8d       	ldd	r24, Y+27	; 0x1b
@@ -3608,7 +3602,6 @@ _delay_ms(double __ms)
     1924:	9e 8b       	std	Y+22, r25	; 0x16
     1926:	af 8b       	std	Y+23, r26	; 0x17
     1928:	b8 8f       	std	Y+24, r27	; 0x18
-	if (__tmp < 1.0)
     192a:	6d 89       	ldd	r22, Y+21	; 0x15
     192c:	7e 89       	ldd	r23, Y+22	; 0x16
     192e:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -3620,13 +3613,11 @@ _delay_ms(double __ms)
     193a:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     193e:	88 23       	and	r24, r24
     1940:	2c f4       	brge	.+10     	; 0x194c <LCD_VidSendData+0x8e>
-		__ticks = 1;
     1942:	81 e0       	ldi	r24, 0x01	; 1
     1944:	90 e0       	ldi	r25, 0x00	; 0
     1946:	9c 8b       	std	Y+20, r25	; 0x14
     1948:	8b 8b       	std	Y+19, r24	; 0x13
     194a:	3f c0       	rjmp	.+126    	; 0x19ca <LCD_VidSendData+0x10c>
-	else if (__tmp > 65535)
     194c:	6d 89       	ldd	r22, Y+21	; 0x15
     194e:	7e 89       	ldd	r23, Y+22	; 0x16
     1950:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -3638,9 +3629,6 @@ _delay_ms(double __ms)
     195c:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     1960:	18 16       	cp	r1, r24
     1962:	4c f5       	brge	.+82     	; 0x19b6 <LCD_VidSendData+0xf8>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     1964:	69 8d       	ldd	r22, Y+25	; 0x19
     1966:	7a 8d       	ldd	r23, Y+26	; 0x1a
     1968:	8b 8d       	ldd	r24, Y+27	; 0x1b
@@ -3664,45 +3652,22 @@ _delay_ms(double __ms)
     1990:	90 e0       	ldi	r25, 0x00	; 0
     1992:	9a 8b       	std	Y+18, r25	; 0x12
     1994:	89 8b       	std	Y+17, r24	; 0x11
-    milliseconds can be achieved.
- */
-void
-_delay_loop_2(uint16_t __count)
-{
-	__asm__ volatile (
     1996:	89 89       	ldd	r24, Y+17	; 0x11
     1998:	9a 89       	ldd	r25, Y+18	; 0x12
     199a:	01 97       	sbiw	r24, 0x01	; 1
     199c:	f1 f7       	brne	.-4      	; 0x199a <LCD_VidSendData+0xdc>
     199e:	9a 8b       	std	Y+18, r25	; 0x12
     19a0:	89 8b       	std	Y+17, r24	; 0x11
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     19a2:	8b 89       	ldd	r24, Y+19	; 0x13
     19a4:	9c 89       	ldd	r25, Y+20	; 0x14
     19a6:	01 97       	sbiw	r24, 0x01	; 1
     19a8:	9c 8b       	std	Y+20, r25	; 0x14
     19aa:	8b 8b       	std	Y+19, r24	; 0x13
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     19ac:	8b 89       	ldd	r24, Y+19	; 0x13
     19ae:	9c 89       	ldd	r25, Y+20	; 0x14
     19b0:	00 97       	sbiw	r24, 0x00	; 0
     19b2:	69 f7       	brne	.-38     	; 0x198e <LCD_VidSendData+0xd0>
     19b4:	14 c0       	rjmp	.+40     	; 0x19de <LCD_VidSendData+0x120>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     19b6:	6d 89       	ldd	r22, Y+21	; 0x15
     19b8:	7e 89       	ldd	r23, Y+22	; 0x16
     19ba:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -3736,12 +3701,6 @@ _delay_loop_2(uint16_t __count)
     19f2:	9c 87       	std	Y+12, r25	; 0x0c
     19f4:	ad 87       	std	Y+13, r26	; 0x0d
     19f6:	be 87       	std	Y+14, r27	; 0x0e
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     19f8:	6b 85       	ldd	r22, Y+11	; 0x0b
     19fa:	7c 85       	ldd	r23, Y+12	; 0x0c
     19fc:	8d 85       	ldd	r24, Y+13	; 0x0d
@@ -3757,7 +3716,6 @@ _delay_ms(double __ms)
     1a12:	98 87       	std	Y+8, r25	; 0x08
     1a14:	a9 87       	std	Y+9, r26	; 0x09
     1a16:	ba 87       	std	Y+10, r27	; 0x0a
-	if (__tmp < 1.0)
     1a18:	6f 81       	ldd	r22, Y+7	; 0x07
     1a1a:	78 85       	ldd	r23, Y+8	; 0x08
     1a1c:	89 85       	ldd	r24, Y+9	; 0x09
@@ -3769,13 +3727,11 @@ _delay_ms(double __ms)
     1a28:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     1a2c:	88 23       	and	r24, r24
     1a2e:	2c f4       	brge	.+10     	; 0x1a3a <LCD_VidSendData+0x17c>
-		__ticks = 1;
     1a30:	81 e0       	ldi	r24, 0x01	; 1
     1a32:	90 e0       	ldi	r25, 0x00	; 0
     1a34:	9e 83       	std	Y+6, r25	; 0x06
     1a36:	8d 83       	std	Y+5, r24	; 0x05
     1a38:	3f c0       	rjmp	.+126    	; 0x1ab8 <LCD_VidSendData+0x1fa>
-	else if (__tmp > 65535)
     1a3a:	6f 81       	ldd	r22, Y+7	; 0x07
     1a3c:	78 85       	ldd	r23, Y+8	; 0x08
     1a3e:	89 85       	ldd	r24, Y+9	; 0x09
@@ -3787,9 +3743,6 @@ _delay_ms(double __ms)
     1a4a:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     1a4e:	18 16       	cp	r1, r24
     1a50:	4c f5       	brge	.+82     	; 0x1aa4 <LCD_VidSendData+0x1e6>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     1a52:	6b 85       	ldd	r22, Y+11	; 0x0b
     1a54:	7c 85       	ldd	r23, Y+12	; 0x0c
     1a56:	8d 85       	ldd	r24, Y+13	; 0x0d
@@ -3819,33 +3772,16 @@ _delay_ms(double __ms)
     1a8a:	f1 f7       	brne	.-4      	; 0x1a88 <LCD_VidSendData+0x1ca>
     1a8c:	9c 83       	std	Y+4, r25	; 0x04
     1a8e:	8b 83       	std	Y+3, r24	; 0x03
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     1a90:	8d 81       	ldd	r24, Y+5	; 0x05
     1a92:	9e 81       	ldd	r25, Y+6	; 0x06
     1a94:	01 97       	sbiw	r24, 0x01	; 1
     1a96:	9e 83       	std	Y+6, r25	; 0x06
     1a98:	8d 83       	std	Y+5, r24	; 0x05
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     1a9a:	8d 81       	ldd	r24, Y+5	; 0x05
     1a9c:	9e 81       	ldd	r25, Y+6	; 0x06
     1a9e:	00 97       	sbiw	r24, 0x00	; 0
     1aa0:	69 f7       	brne	.-38     	; 0x1a7c <LCD_VidSendData+0x1be>
     1aa2:	14 c0       	rjmp	.+40     	; 0x1acc <LCD_VidSendData+0x20e>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     1aa4:	6f 81       	ldd	r22, Y+7	; 0x07
     1aa6:	78 85       	ldd	r23, Y+8	; 0x08
     1aa8:	89 85       	ldd	r24, Y+9	; 0x09
@@ -3919,12 +3855,6 @@ void LCD_VidSendCommand(u8 Copy_u8Data)
     1b24:	9a 8f       	std	Y+26, r25	; 0x1a
     1b26:	ab 8f       	std	Y+27, r26	; 0x1b
     1b28:	bc 8f       	std	Y+28, r27	; 0x1c
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     1b2a:	69 8d       	ldd	r22, Y+25	; 0x19
     1b2c:	7a 8d       	ldd	r23, Y+26	; 0x1a
     1b2e:	8b 8d       	ldd	r24, Y+27	; 0x1b
@@ -3940,7 +3870,6 @@ _delay_ms(double __ms)
     1b44:	9e 8b       	std	Y+22, r25	; 0x16
     1b46:	af 8b       	std	Y+23, r26	; 0x17
     1b48:	b8 8f       	std	Y+24, r27	; 0x18
-	if (__tmp < 1.0)
     1b4a:	6d 89       	ldd	r22, Y+21	; 0x15
     1b4c:	7e 89       	ldd	r23, Y+22	; 0x16
     1b4e:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -3952,13 +3881,11 @@ _delay_ms(double __ms)
     1b5a:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     1b5e:	88 23       	and	r24, r24
     1b60:	2c f4       	brge	.+10     	; 0x1b6c <LCD_VidSendCommand+0x8e>
-		__ticks = 1;
     1b62:	81 e0       	ldi	r24, 0x01	; 1
     1b64:	90 e0       	ldi	r25, 0x00	; 0
     1b66:	9c 8b       	std	Y+20, r25	; 0x14
     1b68:	8b 8b       	std	Y+19, r24	; 0x13
     1b6a:	3f c0       	rjmp	.+126    	; 0x1bea <LCD_VidSendCommand+0x10c>
-	else if (__tmp > 65535)
     1b6c:	6d 89       	ldd	r22, Y+21	; 0x15
     1b6e:	7e 89       	ldd	r23, Y+22	; 0x16
     1b70:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -3970,9 +3897,6 @@ _delay_ms(double __ms)
     1b7c:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     1b80:	18 16       	cp	r1, r24
     1b82:	4c f5       	brge	.+82     	; 0x1bd6 <LCD_VidSendCommand+0xf8>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     1b84:	69 8d       	ldd	r22, Y+25	; 0x19
     1b86:	7a 8d       	ldd	r23, Y+26	; 0x1a
     1b88:	8b 8d       	ldd	r24, Y+27	; 0x1b
@@ -4002,33 +3926,16 @@ _delay_ms(double __ms)
     1bbc:	f1 f7       	brne	.-4      	; 0x1bba <LCD_VidSendCommand+0xdc>
     1bbe:	9a 8b       	std	Y+18, r25	; 0x12
     1bc0:	89 8b       	std	Y+17, r24	; 0x11
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     1bc2:	8b 89       	ldd	r24, Y+19	; 0x13
     1bc4:	9c 89       	ldd	r25, Y+20	; 0x14
     1bc6:	01 97       	sbiw	r24, 0x01	; 1
     1bc8:	9c 8b       	std	Y+20, r25	; 0x14
     1bca:	8b 8b       	std	Y+19, r24	; 0x13
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     1bcc:	8b 89       	ldd	r24, Y+19	; 0x13
     1bce:	9c 89       	ldd	r25, Y+20	; 0x14
     1bd0:	00 97       	sbiw	r24, 0x00	; 0
     1bd2:	69 f7       	brne	.-38     	; 0x1bae <LCD_VidSendCommand+0xd0>
     1bd4:	14 c0       	rjmp	.+40     	; 0x1bfe <LCD_VidSendCommand+0x120>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     1bd6:	6d 89       	ldd	r22, Y+21	; 0x15
     1bd8:	7e 89       	ldd	r23, Y+22	; 0x16
     1bda:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -4062,12 +3969,6 @@ _delay_ms(double __ms)
     1c12:	9c 87       	std	Y+12, r25	; 0x0c
     1c14:	ad 87       	std	Y+13, r26	; 0x0d
     1c16:	be 87       	std	Y+14, r27	; 0x0e
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     1c18:	6b 85       	ldd	r22, Y+11	; 0x0b
     1c1a:	7c 85       	ldd	r23, Y+12	; 0x0c
     1c1c:	8d 85       	ldd	r24, Y+13	; 0x0d
@@ -4083,7 +3984,6 @@ _delay_ms(double __ms)
     1c32:	98 87       	std	Y+8, r25	; 0x08
     1c34:	a9 87       	std	Y+9, r26	; 0x09
     1c36:	ba 87       	std	Y+10, r27	; 0x0a
-	if (__tmp < 1.0)
     1c38:	6f 81       	ldd	r22, Y+7	; 0x07
     1c3a:	78 85       	ldd	r23, Y+8	; 0x08
     1c3c:	89 85       	ldd	r24, Y+9	; 0x09
@@ -4095,13 +3995,11 @@ _delay_ms(double __ms)
     1c48:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     1c4c:	88 23       	and	r24, r24
     1c4e:	2c f4       	brge	.+10     	; 0x1c5a <LCD_VidSendCommand+0x17c>
-		__ticks = 1;
     1c50:	81 e0       	ldi	r24, 0x01	; 1
     1c52:	90 e0       	ldi	r25, 0x00	; 0
     1c54:	9e 83       	std	Y+6, r25	; 0x06
     1c56:	8d 83       	std	Y+5, r24	; 0x05
     1c58:	3f c0       	rjmp	.+126    	; 0x1cd8 <LCD_VidSendCommand+0x1fa>
-	else if (__tmp > 65535)
     1c5a:	6f 81       	ldd	r22, Y+7	; 0x07
     1c5c:	78 85       	ldd	r23, Y+8	; 0x08
     1c5e:	89 85       	ldd	r24, Y+9	; 0x09
@@ -4113,9 +4011,6 @@ _delay_ms(double __ms)
     1c6a:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     1c6e:	18 16       	cp	r1, r24
     1c70:	4c f5       	brge	.+82     	; 0x1cc4 <LCD_VidSendCommand+0x1e6>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     1c72:	6b 85       	ldd	r22, Y+11	; 0x0b
     1c74:	7c 85       	ldd	r23, Y+12	; 0x0c
     1c76:	8d 85       	ldd	r24, Y+13	; 0x0d
@@ -4145,33 +4040,16 @@ _delay_ms(double __ms)
     1caa:	f1 f7       	brne	.-4      	; 0x1ca8 <LCD_VidSendCommand+0x1ca>
     1cac:	9c 83       	std	Y+4, r25	; 0x04
     1cae:	8b 83       	std	Y+3, r24	; 0x03
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     1cb0:	8d 81       	ldd	r24, Y+5	; 0x05
     1cb2:	9e 81       	ldd	r25, Y+6	; 0x06
     1cb4:	01 97       	sbiw	r24, 0x01	; 1
     1cb6:	9e 83       	std	Y+6, r25	; 0x06
     1cb8:	8d 83       	std	Y+5, r24	; 0x05
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     1cba:	8d 81       	ldd	r24, Y+5	; 0x05
     1cbc:	9e 81       	ldd	r25, Y+6	; 0x06
     1cbe:	00 97       	sbiw	r24, 0x00	; 0
     1cc0:	69 f7       	brne	.-38     	; 0x1c9c <LCD_VidSendCommand+0x1be>
     1cc2:	14 c0       	rjmp	.+40     	; 0x1cec <LCD_VidSendCommand+0x20e>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     1cc4:	6f 81       	ldd	r22, Y+7	; 0x07
     1cc6:	78 85       	ldd	r23, Y+8	; 0x08
     1cc8:	89 85       	ldd	r24, Y+9	; 0x09
@@ -4244,12 +4122,6 @@ void LCD_VidInt(void)
     1d42:	9e ab       	std	Y+54, r25	; 0x36
     1d44:	af ab       	std	Y+55, r26	; 0x37
     1d46:	b8 af       	std	Y+56, r27	; 0x38
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     1d48:	6d a9       	ldd	r22, Y+53	; 0x35
     1d4a:	7e a9       	ldd	r23, Y+54	; 0x36
     1d4c:	8f a9       	ldd	r24, Y+55	; 0x37
@@ -4265,7 +4137,6 @@ _delay_ms(double __ms)
     1d62:	9a ab       	std	Y+50, r25	; 0x32
     1d64:	ab ab       	std	Y+51, r26	; 0x33
     1d66:	bc ab       	std	Y+52, r27	; 0x34
-	if (__tmp < 1.0)
     1d68:	69 a9       	ldd	r22, Y+49	; 0x31
     1d6a:	7a a9       	ldd	r23, Y+50	; 0x32
     1d6c:	8b a9       	ldd	r24, Y+51	; 0x33
@@ -4277,13 +4148,11 @@ _delay_ms(double __ms)
     1d78:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     1d7c:	88 23       	and	r24, r24
     1d7e:	2c f4       	brge	.+10     	; 0x1d8a <LCD_VidInt+0x8c>
-		__ticks = 1;
     1d80:	81 e0       	ldi	r24, 0x01	; 1
     1d82:	90 e0       	ldi	r25, 0x00	; 0
     1d84:	98 ab       	std	Y+48, r25	; 0x30
     1d86:	8f a7       	std	Y+47, r24	; 0x2f
     1d88:	3f c0       	rjmp	.+126    	; 0x1e08 <LCD_VidInt+0x10a>
-	else if (__tmp > 65535)
     1d8a:	69 a9       	ldd	r22, Y+49	; 0x31
     1d8c:	7a a9       	ldd	r23, Y+50	; 0x32
     1d8e:	8b a9       	ldd	r24, Y+51	; 0x33
@@ -4295,9 +4164,6 @@ _delay_ms(double __ms)
     1d9a:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     1d9e:	18 16       	cp	r1, r24
     1da0:	4c f5       	brge	.+82     	; 0x1df4 <LCD_VidInt+0xf6>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     1da2:	6d a9       	ldd	r22, Y+53	; 0x35
     1da4:	7e a9       	ldd	r23, Y+54	; 0x36
     1da6:	8f a9       	ldd	r24, Y+55	; 0x37
@@ -4327,33 +4193,16 @@ _delay_ms(double __ms)
     1dda:	f1 f7       	brne	.-4      	; 0x1dd8 <LCD_VidInt+0xda>
     1ddc:	9e a7       	std	Y+46, r25	; 0x2e
     1dde:	8d a7       	std	Y+45, r24	; 0x2d
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     1de0:	8f a5       	ldd	r24, Y+47	; 0x2f
     1de2:	98 a9       	ldd	r25, Y+48	; 0x30
     1de4:	01 97       	sbiw	r24, 0x01	; 1
     1de6:	98 ab       	std	Y+48, r25	; 0x30
     1de8:	8f a7       	std	Y+47, r24	; 0x2f
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     1dea:	8f a5       	ldd	r24, Y+47	; 0x2f
     1dec:	98 a9       	ldd	r25, Y+48	; 0x30
     1dee:	00 97       	sbiw	r24, 0x00	; 0
     1df0:	69 f7       	brne	.-38     	; 0x1dcc <LCD_VidInt+0xce>
     1df2:	14 c0       	rjmp	.+40     	; 0x1e1c <LCD_VidInt+0x11e>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     1df4:	69 a9       	ldd	r22, Y+49	; 0x31
     1df6:	7a a9       	ldd	r23, Y+50	; 0x32
     1df8:	8b a9       	ldd	r24, Y+51	; 0x33
@@ -4385,12 +4234,6 @@ _delay_ms(double __ms)
     1e2c:	98 a7       	std	Y+40, r25	; 0x28
     1e2e:	a9 a7       	std	Y+41, r26	; 0x29
     1e30:	ba a7       	std	Y+42, r27	; 0x2a
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     1e32:	6f a1       	ldd	r22, Y+39	; 0x27
     1e34:	78 a5       	ldd	r23, Y+40	; 0x28
     1e36:	89 a5       	ldd	r24, Y+41	; 0x29
@@ -4406,7 +4249,6 @@ _delay_ms(double __ms)
     1e4c:	9c a3       	std	Y+36, r25	; 0x24
     1e4e:	ad a3       	std	Y+37, r26	; 0x25
     1e50:	be a3       	std	Y+38, r27	; 0x26
-	if (__tmp < 1.0)
     1e52:	6b a1       	ldd	r22, Y+35	; 0x23
     1e54:	7c a1       	ldd	r23, Y+36	; 0x24
     1e56:	8d a1       	ldd	r24, Y+37	; 0x25
@@ -4418,13 +4260,11 @@ _delay_ms(double __ms)
     1e62:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     1e66:	88 23       	and	r24, r24
     1e68:	2c f4       	brge	.+10     	; 0x1e74 <LCD_VidInt+0x176>
-		__ticks = 1;
     1e6a:	81 e0       	ldi	r24, 0x01	; 1
     1e6c:	90 e0       	ldi	r25, 0x00	; 0
     1e6e:	9a a3       	std	Y+34, r25	; 0x22
     1e70:	89 a3       	std	Y+33, r24	; 0x21
     1e72:	3f c0       	rjmp	.+126    	; 0x1ef2 <LCD_VidInt+0x1f4>
-	else if (__tmp > 65535)
     1e74:	6b a1       	ldd	r22, Y+35	; 0x23
     1e76:	7c a1       	ldd	r23, Y+36	; 0x24
     1e78:	8d a1       	ldd	r24, Y+37	; 0x25
@@ -4436,9 +4276,6 @@ _delay_ms(double __ms)
     1e84:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     1e88:	18 16       	cp	r1, r24
     1e8a:	4c f5       	brge	.+82     	; 0x1ede <LCD_VidInt+0x1e0>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     1e8c:	6f a1       	ldd	r22, Y+39	; 0x27
     1e8e:	78 a5       	ldd	r23, Y+40	; 0x28
     1e90:	89 a5       	ldd	r24, Y+41	; 0x29
@@ -4468,33 +4305,16 @@ _delay_ms(double __ms)
     1ec4:	f1 f7       	brne	.-4      	; 0x1ec2 <LCD_VidInt+0x1c4>
     1ec6:	98 a3       	std	Y+32, r25	; 0x20
     1ec8:	8f 8f       	std	Y+31, r24	; 0x1f
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     1eca:	89 a1       	ldd	r24, Y+33	; 0x21
     1ecc:	9a a1       	ldd	r25, Y+34	; 0x22
     1ece:	01 97       	sbiw	r24, 0x01	; 1
     1ed0:	9a a3       	std	Y+34, r25	; 0x22
     1ed2:	89 a3       	std	Y+33, r24	; 0x21
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     1ed4:	89 a1       	ldd	r24, Y+33	; 0x21
     1ed6:	9a a1       	ldd	r25, Y+34	; 0x22
     1ed8:	00 97       	sbiw	r24, 0x00	; 0
     1eda:	69 f7       	brne	.-38     	; 0x1eb6 <LCD_VidInt+0x1b8>
     1edc:	14 c0       	rjmp	.+40     	; 0x1f06 <LCD_VidInt+0x208>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     1ede:	6b a1       	ldd	r22, Y+35	; 0x23
     1ee0:	7c a1       	ldd	r23, Y+36	; 0x24
     1ee2:	8d a1       	ldd	r24, Y+37	; 0x25
@@ -4526,12 +4346,6 @@ _delay_ms(double __ms)
     1f16:	9a 8f       	std	Y+26, r25	; 0x1a
     1f18:	ab 8f       	std	Y+27, r26	; 0x1b
     1f1a:	bc 8f       	std	Y+28, r27	; 0x1c
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     1f1c:	69 8d       	ldd	r22, Y+25	; 0x19
     1f1e:	7a 8d       	ldd	r23, Y+26	; 0x1a
     1f20:	8b 8d       	ldd	r24, Y+27	; 0x1b
@@ -4547,7 +4361,6 @@ _delay_ms(double __ms)
     1f36:	9e 8b       	std	Y+22, r25	; 0x16
     1f38:	af 8b       	std	Y+23, r26	; 0x17
     1f3a:	b8 8f       	std	Y+24, r27	; 0x18
-	if (__tmp < 1.0)
     1f3c:	6d 89       	ldd	r22, Y+21	; 0x15
     1f3e:	7e 89       	ldd	r23, Y+22	; 0x16
     1f40:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -4559,13 +4372,11 @@ _delay_ms(double __ms)
     1f4c:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     1f50:	88 23       	and	r24, r24
     1f52:	2c f4       	brge	.+10     	; 0x1f5e <LCD_VidInt+0x260>
-		__ticks = 1;
     1f54:	81 e0       	ldi	r24, 0x01	; 1
     1f56:	90 e0       	ldi	r25, 0x00	; 0
     1f58:	9c 8b       	std	Y+20, r25	; 0x14
     1f5a:	8b 8b       	std	Y+19, r24	; 0x13
     1f5c:	3f c0       	rjmp	.+126    	; 0x1fdc <LCD_VidInt+0x2de>
-	else if (__tmp > 65535)
     1f5e:	6d 89       	ldd	r22, Y+21	; 0x15
     1f60:	7e 89       	ldd	r23, Y+22	; 0x16
     1f62:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -4577,9 +4388,6 @@ _delay_ms(double __ms)
     1f6e:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     1f72:	18 16       	cp	r1, r24
     1f74:	4c f5       	brge	.+82     	; 0x1fc8 <LCD_VidInt+0x2ca>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     1f76:	69 8d       	ldd	r22, Y+25	; 0x19
     1f78:	7a 8d       	ldd	r23, Y+26	; 0x1a
     1f7a:	8b 8d       	ldd	r24, Y+27	; 0x1b
@@ -4609,33 +4417,16 @@ _delay_ms(double __ms)
     1fae:	f1 f7       	brne	.-4      	; 0x1fac <LCD_VidInt+0x2ae>
     1fb0:	9a 8b       	std	Y+18, r25	; 0x12
     1fb2:	89 8b       	std	Y+17, r24	; 0x11
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     1fb4:	8b 89       	ldd	r24, Y+19	; 0x13
     1fb6:	9c 89       	ldd	r25, Y+20	; 0x14
     1fb8:	01 97       	sbiw	r24, 0x01	; 1
     1fba:	9c 8b       	std	Y+20, r25	; 0x14
     1fbc:	8b 8b       	std	Y+19, r24	; 0x13
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     1fbe:	8b 89       	ldd	r24, Y+19	; 0x13
     1fc0:	9c 89       	ldd	r25, Y+20	; 0x14
     1fc2:	00 97       	sbiw	r24, 0x00	; 0
     1fc4:	69 f7       	brne	.-38     	; 0x1fa0 <LCD_VidInt+0x2a2>
     1fc6:	14 c0       	rjmp	.+40     	; 0x1ff0 <LCD_VidInt+0x2f2>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     1fc8:	6d 89       	ldd	r22, Y+21	; 0x15
     1fca:	7e 89       	ldd	r23, Y+22	; 0x16
     1fcc:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -4667,12 +4458,6 @@ _delay_ms(double __ms)
     2000:	9c 87       	std	Y+12, r25	; 0x0c
     2002:	ad 87       	std	Y+13, r26	; 0x0d
     2004:	be 87       	std	Y+14, r27	; 0x0e
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     2006:	6b 85       	ldd	r22, Y+11	; 0x0b
     2008:	7c 85       	ldd	r23, Y+12	; 0x0c
     200a:	8d 85       	ldd	r24, Y+13	; 0x0d
@@ -4688,7 +4473,6 @@ _delay_ms(double __ms)
     2020:	98 87       	std	Y+8, r25	; 0x08
     2022:	a9 87       	std	Y+9, r26	; 0x09
     2024:	ba 87       	std	Y+10, r27	; 0x0a
-	if (__tmp < 1.0)
     2026:	6f 81       	ldd	r22, Y+7	; 0x07
     2028:	78 85       	ldd	r23, Y+8	; 0x08
     202a:	89 85       	ldd	r24, Y+9	; 0x09
@@ -4700,13 +4484,11 @@ _delay_ms(double __ms)
     2036:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     203a:	88 23       	and	r24, r24
     203c:	2c f4       	brge	.+10     	; 0x2048 <LCD_VidInt+0x34a>
-		__ticks = 1;
     203e:	81 e0       	ldi	r24, 0x01	; 1
     2040:	90 e0       	ldi	r25, 0x00	; 0
     2042:	9e 83       	std	Y+6, r25	; 0x06
     2044:	8d 83       	std	Y+5, r24	; 0x05
     2046:	3f c0       	rjmp	.+126    	; 0x20c6 <LCD_VidInt+0x3c8>
-	else if (__tmp > 65535)
     2048:	6f 81       	ldd	r22, Y+7	; 0x07
     204a:	78 85       	ldd	r23, Y+8	; 0x08
     204c:	89 85       	ldd	r24, Y+9	; 0x09
@@ -4718,9 +4500,6 @@ _delay_ms(double __ms)
     2058:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     205c:	18 16       	cp	r1, r24
     205e:	4c f5       	brge	.+82     	; 0x20b2 <LCD_VidInt+0x3b4>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     2060:	6b 85       	ldd	r22, Y+11	; 0x0b
     2062:	7c 85       	ldd	r23, Y+12	; 0x0c
     2064:	8d 85       	ldd	r24, Y+13	; 0x0d
@@ -4750,33 +4529,16 @@ _delay_ms(double __ms)
     2098:	f1 f7       	brne	.-4      	; 0x2096 <LCD_VidInt+0x398>
     209a:	9c 83       	std	Y+4, r25	; 0x04
     209c:	8b 83       	std	Y+3, r24	; 0x03
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     209e:	8d 81       	ldd	r24, Y+5	; 0x05
     20a0:	9e 81       	ldd	r25, Y+6	; 0x06
     20a2:	01 97       	sbiw	r24, 0x01	; 1
     20a4:	9e 83       	std	Y+6, r25	; 0x06
     20a6:	8d 83       	std	Y+5, r24	; 0x05
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     20a8:	8d 81       	ldd	r24, Y+5	; 0x05
     20aa:	9e 81       	ldd	r25, Y+6	; 0x06
     20ac:	00 97       	sbiw	r24, 0x00	; 0
     20ae:	69 f7       	brne	.-38     	; 0x208a <LCD_VidInt+0x38c>
     20b0:	14 c0       	rjmp	.+40     	; 0x20da <LCD_VidInt+0x3dc>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     20b2:	6f 81       	ldd	r22, Y+7	; 0x07
     20b4:	78 85       	ldd	r23, Y+8	; 0x08
     20b6:	89 85       	ldd	r24, Y+9	; 0x09
@@ -4860,12 +4622,6 @@ void LCD_VidSendStr(u8* Copy_u8string)
     213c:	9a 8f       	std	Y+26, r25	; 0x1a
     213e:	ab 8f       	std	Y+27, r26	; 0x1b
     2140:	bc 8f       	std	Y+28, r27	; 0x1c
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     2142:	69 8d       	ldd	r22, Y+25	; 0x19
     2144:	7a 8d       	ldd	r23, Y+26	; 0x1a
     2146:	8b 8d       	ldd	r24, Y+27	; 0x1b
@@ -4881,7 +4637,6 @@ _delay_ms(double __ms)
     215c:	9e 8b       	std	Y+22, r25	; 0x16
     215e:	af 8b       	std	Y+23, r26	; 0x17
     2160:	b8 8f       	std	Y+24, r27	; 0x18
-	if (__tmp < 1.0)
     2162:	6d 89       	ldd	r22, Y+21	; 0x15
     2164:	7e 89       	ldd	r23, Y+22	; 0x16
     2166:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -4893,13 +4648,11 @@ _delay_ms(double __ms)
     2172:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     2176:	88 23       	and	r24, r24
     2178:	2c f4       	brge	.+10     	; 0x2184 <LCD_VidSendStr+0x98>
-		__ticks = 1;
     217a:	81 e0       	ldi	r24, 0x01	; 1
     217c:	90 e0       	ldi	r25, 0x00	; 0
     217e:	9c 8b       	std	Y+20, r25	; 0x14
     2180:	8b 8b       	std	Y+19, r24	; 0x13
     2182:	3f c0       	rjmp	.+126    	; 0x2202 <LCD_VidSendStr+0x116>
-	else if (__tmp > 65535)
     2184:	6d 89       	ldd	r22, Y+21	; 0x15
     2186:	7e 89       	ldd	r23, Y+22	; 0x16
     2188:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -4911,9 +4664,6 @@ _delay_ms(double __ms)
     2194:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     2198:	18 16       	cp	r1, r24
     219a:	4c f5       	brge	.+82     	; 0x21ee <LCD_VidSendStr+0x102>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     219c:	69 8d       	ldd	r22, Y+25	; 0x19
     219e:	7a 8d       	ldd	r23, Y+26	; 0x1a
     21a0:	8b 8d       	ldd	r24, Y+27	; 0x1b
@@ -4943,33 +4693,16 @@ _delay_ms(double __ms)
     21d4:	f1 f7       	brne	.-4      	; 0x21d2 <LCD_VidSendStr+0xe6>
     21d6:	9a 8b       	std	Y+18, r25	; 0x12
     21d8:	89 8b       	std	Y+17, r24	; 0x11
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     21da:	8b 89       	ldd	r24, Y+19	; 0x13
     21dc:	9c 89       	ldd	r25, Y+20	; 0x14
     21de:	01 97       	sbiw	r24, 0x01	; 1
     21e0:	9c 8b       	std	Y+20, r25	; 0x14
     21e2:	8b 8b       	std	Y+19, r24	; 0x13
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     21e4:	8b 89       	ldd	r24, Y+19	; 0x13
     21e6:	9c 89       	ldd	r25, Y+20	; 0x14
     21e8:	00 97       	sbiw	r24, 0x00	; 0
     21ea:	69 f7       	brne	.-38     	; 0x21c6 <LCD_VidSendStr+0xda>
     21ec:	14 c0       	rjmp	.+40     	; 0x2216 <LCD_VidSendStr+0x12a>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     21ee:	6d 89       	ldd	r22, Y+21	; 0x15
     21f0:	7e 89       	ldd	r23, Y+22	; 0x16
     21f2:	8f 89       	ldd	r24, Y+23	; 0x17
@@ -5003,12 +4736,6 @@ _delay_ms(double __ms)
     222a:	9c 87       	std	Y+12, r25	; 0x0c
     222c:	ad 87       	std	Y+13, r26	; 0x0d
     222e:	be 87       	std	Y+14, r27	; 0x0e
- */
-void
-_delay_ms(double __ms)
-{
-	uint16_t __ticks;
-	double __tmp = ((F_CPU) / 4e3) * __ms;
     2230:	6b 85       	ldd	r22, Y+11	; 0x0b
     2232:	7c 85       	ldd	r23, Y+12	; 0x0c
     2234:	8d 85       	ldd	r24, Y+13	; 0x0d
@@ -5024,7 +4751,6 @@ _delay_ms(double __ms)
     224a:	98 87       	std	Y+8, r25	; 0x08
     224c:	a9 87       	std	Y+9, r26	; 0x09
     224e:	ba 87       	std	Y+10, r27	; 0x0a
-	if (__tmp < 1.0)
     2250:	6f 81       	ldd	r22, Y+7	; 0x07
     2252:	78 85       	ldd	r23, Y+8	; 0x08
     2254:	89 85       	ldd	r24, Y+9	; 0x09
@@ -5036,13 +4762,11 @@ _delay_ms(double __ms)
     2260:	0e 94 79 03 	call	0x6f2	; 0x6f2 <__ltsf2>
     2264:	88 23       	and	r24, r24
     2266:	2c f4       	brge	.+10     	; 0x2272 <LCD_VidSendStr+0x186>
-		__ticks = 1;
     2268:	81 e0       	ldi	r24, 0x01	; 1
     226a:	90 e0       	ldi	r25, 0x00	; 0
     226c:	9e 83       	std	Y+6, r25	; 0x06
     226e:	8d 83       	std	Y+5, r24	; 0x05
     2270:	3f c0       	rjmp	.+126    	; 0x22f0 <LCD_VidSendStr+0x204>
-	else if (__tmp > 65535)
     2272:	6f 81       	ldd	r22, Y+7	; 0x07
     2274:	78 85       	ldd	r23, Y+8	; 0x08
     2276:	89 85       	ldd	r24, Y+9	; 0x09
@@ -5054,9 +4778,6 @@ _delay_ms(double __ms)
     2282:	0e 94 19 03 	call	0x632	; 0x632 <__gtsf2>
     2286:	18 16       	cp	r1, r24
     2288:	4c f5       	brge	.+82     	; 0x22dc <LCD_VidSendStr+0x1f0>
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
     228a:	6b 85       	ldd	r22, Y+11	; 0x0b
     228c:	7c 85       	ldd	r23, Y+12	; 0x0c
     228e:	8d 85       	ldd	r24, Y+13	; 0x0d
@@ -5086,33 +4807,16 @@ _delay_ms(double __ms)
     22c2:	f1 f7       	brne	.-4      	; 0x22c0 <LCD_VidSendStr+0x1d4>
     22c4:	9c 83       	std	Y+4, r25	; 0x04
     22c6:	8b 83       	std	Y+3, r24	; 0x03
-		while(__ticks)
-		{
-			// wait 1/10 ms
-			_delay_loop_2(((F_CPU) / 4e3) / 10);
-			__ticks --;
     22c8:	8d 81       	ldd	r24, Y+5	; 0x05
     22ca:	9e 81       	ldd	r25, Y+6	; 0x06
     22cc:	01 97       	sbiw	r24, 0x01	; 1
     22ce:	9e 83       	std	Y+6, r25	; 0x06
     22d0:	8d 83       	std	Y+5, r24	; 0x05
-		__ticks = 1;
-	else if (__tmp > 65535)
-	{
-		//	__ticks = requested delay in 1/10 ms
-		__ticks = (uint16_t) (__ms * 10.0);
-		while(__ticks)
     22d2:	8d 81       	ldd	r24, Y+5	; 0x05
     22d4:	9e 81       	ldd	r25, Y+6	; 0x06
     22d6:	00 97       	sbiw	r24, 0x00	; 0
     22d8:	69 f7       	brne	.-38     	; 0x22b4 <LCD_VidSendStr+0x1c8>
     22da:	14 c0       	rjmp	.+40     	; 0x2304 <LCD_VidSendStr+0x218>
-			__ticks --;
-		}
-		return;
-	}
-	else
-		__ticks = (uint16_t)__tmp;
     22dc:	6f 81       	ldd	r22, Y+7	; 0x07
     22de:	78 85       	ldd	r23, Y+8	; 0x08
     22e0:	89 85       	ldd	r24, Y+9	; 0x09
