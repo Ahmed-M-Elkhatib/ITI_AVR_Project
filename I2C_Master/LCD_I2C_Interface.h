@@ -11,7 +11,7 @@
 
 #define LCD_I2C_Slave_Address 5
 
-void LCD_I2C_init						(u8 *,u8 );
+void LCD_I2C_init						();
 
 void LCD_I2C_SendCommand		(u8 );
 void LCD_I2C_SendData				(u8 );

@@ -12,7 +12,7 @@
 #include "LCD_interface.h"
 #include "LCD_I2C_Interface.h"
 
-
+#include "LCD_I2C_Config.h"
 
 #define LCD_I2C_Integer						0
 
@@ -22,34 +22,30 @@
 
 #define LCD_I2C_CGRAMData			7
 
-void LCD_I2C_init(u8 *Copy_u8CommandArray,u8 Copy_u8Size)
+void LCD_I2C_init()
 {
-	u8 i = 0;
+
+	u8 command1 = (0x04 | (LCD_ENTRYMODE_ID<<1) | (LCD_ENTRYMODE_S<<0));
+	u8 command2 = (0x08 | (LCD_DISPLAY_C<<1) | (LCD_DISPLAY_D<<2)  | (LCD_DISPLAY_B<<0));
 	_delay_ms(40);
 	I2C_master_init();
 	_delay_ms(120);
 	I2C_send_start();
 	I2C_select_slave(5,0);
-	/*
 	_delay_ms(100);
-	I2C_Master_send_data(command);
+
+	I2C_Master_send_data(LCD_I2C_Command);
 	_delay_ms(100);
-	I2C_Master_send_data(0b00111000);
+	I2C_Master_send_data(command1);
 	_delay_ms(100);
-	I2C_Master_send_data(command);
+	I2C_Master_send_data(LCD_I2C_Command);
 	_delay_ms(100);
-	I2C_Master_send_data(0b00001100);
+	I2C_Master_send_data(command2);
 	_delay_ms(100);
-	I2C_Master_send_data(command);
+	I2C_Master_send_data(LCD_I2C_Command);
 	_delay_ms(100);
-	I2C_Master_send_data(0b00000001);
-	*/
-	for(i = 0; i<Copy_u8Size;i++){
-		_delay_ms(100);
-		I2C_Master_send_data(LCD_I2C_Command);
-		_delay_ms(100);
-		I2C_Master_send_data(Copy_u8CommandArray[i]);
-	}
+	I2C_Master_send_data(LCD_COMMAND_CLEARDISP);
+
 	_delay_ms(10);
 	I2C_stop();
 }

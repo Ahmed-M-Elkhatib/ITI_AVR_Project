@@ -23,13 +23,7 @@ void main (void)
 	*/
 
 
-	u8 init_array[]= {
-			0b00111000,
-			0b00001100,
-			0b00000001
-
-	};
-	LCD_I2C_init(init_array,3);
+	LCD_I2C_init();
 	LCD_I2C_SendFloat(-12.5);
 		LCD_I2C_SendString("/");
 		LCD_I2C_SendString("Ahmed");
