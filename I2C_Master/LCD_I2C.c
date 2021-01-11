@@ -14,11 +14,7 @@
 
 
 
-#define LCD_I2C_UnsignedInteger		0
-#define LCD_I2C_SignedInteger   		1
-
-#define LCD_I2C_UnsignedFloat   		2
-#define LCD_I2C_SignedFloat		  		3
+#define LCD_I2C_Integer						0
 
 #define LCD_I2C_String  	 					4
 #define LCD_I2C_Command 				5
@@ -33,7 +29,7 @@ void LCD_I2C_init(u8 *Copy_u8CommandArray,u8 Copy_u8Size)
 	I2C_master_init();
 	_delay_ms(120);
 	I2C_send_start();
-	I2C_select_slave(LCD_I2C_Slave_Address,0);
+	I2C_select_slave(5,0);
 	/*
 	_delay_ms(100);
 	I2C_Master_send_data(command);
@@ -53,8 +49,6 @@ void LCD_I2C_init(u8 *Copy_u8CommandArray,u8 Copy_u8Size)
 		I2C_Master_send_data(LCD_I2C_Command);
 		_delay_ms(100);
 		I2C_Master_send_data(Copy_u8CommandArray[i]);
-		_delay_ms(10);
-	//	I2C_send_start();
 	}
 	_delay_ms(10);
 	I2C_stop();
@@ -70,19 +64,19 @@ void LCD_I2C_SendNum(s16 Copy_u16num){
 	}
 	u8 LSB=(u8)Copy_u16num;
 	u8 MSB= (u8)(Copy_u16num>>8);
+	if(signindicate){
+		LCD_I2C_SendData('-');
+
+	}
+
 	// Start the transmission
 	I2C_send_start();
-	I2C_select_slave(LCD_I2C_Slave_Address,0);
+	I2C_select_slave(5,0);
 	_delay_ms(200);
 
-	if(signindicate){
-		// The number is -ve
-		I2C_Master_send_data(LCD_I2C_SignedInteger);
-	}
-	else{
-		// The number is +ve
-		I2C_Master_send_data(LCD_I2C_UnsignedInteger);
-	}
+
+	I2C_Master_send_data(LCD_I2C_Integer);
+
 
 	_delay_ms(200);
 	I2C_Master_send_data(LSB);
@@ -123,7 +117,7 @@ void LCD_I2C_SendString(u8* Copy_u8str)
 void LCD_I2C_SendCommand(u8 Copy_u8Command)
 {
 	I2C_send_start();
-	I2C_select_slave(LCD_I2C_Slave_Address,0);
+	I2C_select_slave(5,0);
 	_delay_ms(100);
 
 	I2C_Master_send_data(LCD_I2C_Command);
@@ -137,7 +131,7 @@ void LCD_I2C_SendCommand(u8 Copy_u8Command)
 void LCD_I2C_SendData(u8 Copy_u8Data)
 {
 	I2C_send_start();
-	I2C_select_slave(LCD_I2C_Slave_Address,0);
+	I2C_select_slave(5,0);
 	_delay_ms(100);
 
 	I2C_Master_send_data(LCD_I2C_Data);
@@ -149,61 +143,13 @@ void LCD_I2C_SendData(u8 Copy_u8Data)
 }
 
 void LCD_I2C_SendFloat(f32 Copy_u8Fnum){
-	// For checking if the number is negative or not
-	u8 signindicate = (Copy_u8Fnum<0)? 1:0;
 
-	if(signindicate){
-
-		Copy_u8Fnum = Copy_u8Fnum*-1;
-	}
-	u8 LSB_Int=(u8)Copy_u8Fnum;
-	u8 MSB_Int= (u8)(((s16)Copy_u8Fnum)>>8);
-
-	u8 _Float=(u8) ((Copy_u8Fnum - (s32)Copy_u8Fnum) *100);
-
-
-	long mantissa = *( long * ) & Copy_u8Fnum;
-	// NOT SURE OF THE MASKING
-	//mantissa = mantissa & 0x000007FFFFF;
-	// Start the transmission
-	I2C_send_start();
-	I2C_select_slave(LCD_I2C_Slave_Address,0);
-	_delay_ms(200);
-
-	if(signindicate){
-		// The number is -ve
-		I2C_Master_send_data(LCD_I2C_SignedFloat);
-	}
-	else{
-		// The number is +ve
-		I2C_Master_send_data(LCD_I2C_UnsignedFloat);
-	}
-
-	_delay_ms(200);
-	I2C_Master_send_data(LSB_Int);
-
-	if (MSB_Int==0)
-	{
-
-	}
-	else
-	{
-		_delay_ms(200);
-		I2C_Master_send_data(MSB_Int);
-	}
-	_delay_ms(200);
-	// Send the floating point
-	I2C_Master_send_data('.');
-
-	// Send the floating number
-	_delay_ms(200);
-
-
-	I2C_Master_send_data(_Float);
-
-
-	_delay_ms(10);
-	I2C_stop();
+	s16 Int=(s16)Copy_u8Fnum;
+	s16 Float=(s16) ((Copy_u8Fnum -Int) *100);
+	Float *= -1;
+	LCD_I2C_SendNum(Int);
+	LCD_I2C_SendData('.');
+	LCD_I2C_SendNum(Float);
 }
 
 
@@ -234,7 +180,7 @@ void LCD_I2C_WriteInCGRAM(u8 *Copy_U8ptr)
 	I2C_master_init();
 	_delay_ms(120);
 	I2C_send_start();
-	I2C_select_slave(LCD_I2C_Slave_Address,0);
+	I2C_select_slave(5,0);
 	_delay_ms(100);
 	I2C_Master_send_data(LCD_I2C_CGRAMData);
 

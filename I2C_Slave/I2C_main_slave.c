@@ -13,6 +13,7 @@
 #define Num   	0
 #define Str   	4
 #define command 5
+#define Data 6
 u8 flag=0;
 void Receive_2Byte(u8* Copy_char,u8* Copy_command);
 void LCD_PORT_init(void);
@@ -28,6 +29,7 @@ while(1)
 		Receive_2Byte(&byte1,&byte2);
 		if (byte1==command){LCD_VidSendCommand(byte2);flag=0;}
 		else if (byte1==Num){LCD_VidSendNum(byte2);flag=0;}
+		else if (byte1==Data){LCD_VidSendData(byte2);flag=0;}
 		else if(byte1==Str)
 		{
 			while(byte2!='\0')

@@ -30,7 +30,7 @@ void main (void)
 
 	};
 	LCD_I2C_init(init_array,3);
-		LCD_I2C_SendNum(125);
+	LCD_I2C_SendFloat(-12.5);
 		LCD_I2C_SendString("/");
 		LCD_I2C_SendString("Ahmed");
 		while(1);

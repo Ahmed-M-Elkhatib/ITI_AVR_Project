@@ -147,7 +147,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x25bc
+.text           0x00000000     0x25ce
  *(.vectors)
  .vectors       0x00000000       0x54 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
                 0x00000000                __vectors
@@ -306,58 +306,58 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .text.I2C_slave_init
                 0x00001774       0x1e ./I2C_Program.o
                 0x00001774                I2C_slave_init
- .text.main     0x00001792       0xc4 ./I2C_main_slave.o
+ .text.main     0x00001792       0xd6 ./I2C_main_slave.o
                 0x00001792                main
  .text.Receive_2Byte
-                0x00001856       0x4c ./I2C_main_slave.o
-                0x00001856                Receive_2Byte
+                0x00001868       0x4c ./I2C_main_slave.o
+                0x00001868                Receive_2Byte
  .text.LCD_PORT_init
-                0x000018a2       0x34 ./I2C_main_slave.o
-                0x000018a2                LCD_PORT_init
+                0x000018b4       0x34 ./I2C_main_slave.o
+                0x000018b4                LCD_PORT_init
  .text.LCD_VidSendData
-                0x000018d6      0x220 ./LCD_program.o
-                0x000018d6                LCD_VidSendData
+                0x000018e8      0x220 ./LCD_program.o
+                0x000018e8                LCD_VidSendData
  .text.LCD_VidSendCommand
-                0x00001af6      0x220 ./LCD_program.o
-                0x00001af6                LCD_VidSendCommand
+                0x00001b08      0x220 ./LCD_program.o
+                0x00001b08                LCD_VidSendCommand
  .text.LCD_VidInt
-                0x00001d16      0x3ee ./LCD_program.o
-                0x00001d16                LCD_VidInt
+                0x00001d28      0x3ee ./LCD_program.o
+                0x00001d28                LCD_VidInt
  .text.LCD_VidSendStr
-                0x00002104      0x240 ./LCD_program.o
-                0x00002104                LCD_VidSendStr
+                0x00002116      0x240 ./LCD_program.o
+                0x00002116                LCD_VidSendStr
  .text.LCD_VidSendNum
-                0x00002344       0xe0 ./LCD_program.o
-                0x00002344                LCD_VidSendNum
+                0x00002356       0xe0 ./LCD_program.o
+                0x00002356                LCD_VidSendNum
  .text.LCD_VidShiftDispaly
-                0x00002424       0x60 ./LCD_program.o
-                0x00002424                LCD_VidShiftDispaly
+                0x00002436       0x60 ./LCD_program.o
+                0x00002436                LCD_VidShiftDispaly
  .text.LCD_VidCLR
-                0x00002484       0x14 ./LCD_program.o
-                0x00002484                LCD_VidCLR
+                0x00002496       0x14 ./LCD_program.o
+                0x00002496                LCD_VidCLR
  .text.LCD_SetCGRam
-                0x00002498       0x22 ./LCD_program.o
-                0x00002498                LCD_SetCGRam
+                0x000024aa       0x22 ./LCD_program.o
+                0x000024aa                LCD_SetCGRam
  .text.LCD_SetDDRam
-                0x000024ba       0x1c ./LCD_program.o
-                0x000024ba                LCD_SetDDRam
+                0x000024cc       0x1c ./LCD_program.o
+                0x000024cc                LCD_SetDDRam
  .text.LCD_VidSendCharToCGRam
-                0x000024d6       0x4c ./LCD_program.o
-                0x000024d6                LCD_VidSendCharToCGRam
- .text.libgcc   0x00002522       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
-                0x00002522                __udivmodhi4
- .text.libgcc   0x0000254a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x0000254a        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
- .text.libgcc   0x0000254a       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x0000254a                __prologue_saves__
- .text.libgcc   0x00002582       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x00002582                __epilogue_restores__
- .text.libgcc   0x000025b8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
-                0x000025b8                . = ALIGN (0x2)
+                0x000024e8       0x4c ./LCD_program.o
+                0x000024e8                LCD_VidSendCharToCGRam
+ .text.libgcc   0x00002534       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                0x00002534                __udivmodhi4
+ .text.libgcc   0x0000255c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x0000255c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x0000255c       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x0000255c                __prologue_saves__
+ .text.libgcc   0x00002594       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x00002594                __epilogue_restores__
+ .text.libgcc   0x000025ca        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+                0x000025ca                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000025b8        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x000025b8                exit
-                0x000025b8                _exit
+ .fini9         0x000025ca        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x000025ca                exit
+                0x000025ca                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -376,11 +376,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000025b8        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x000025ca        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000025bc                _etext = .
+                0x000025ce                _etext = .
 
-.data           0x00800060        0x8 load address 0x000025bc
+.data           0x00800060        0x8 load address 0x000025ce
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
@@ -444,8 +444,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x00800068                flag
  *(COMMON)
                 0x00800069                PROVIDE (__bss_end, .)
-                0x000025bc                __data_load_start = LOADADDR (.data)
-                0x000025c4                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000025ce                __data_load_start = LOADADDR (.data)
+                0x000025d6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800069        0x0
                 0x00800069                PROVIDE (__noinit_start, .)
@@ -470,14 +470,14 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x1d34
+.stab           0x00000000     0x1d40
  *(.stab)
  .stab          0x00000000      0x72c ./DIO_Program.o
  .stab          0x0000072c      0x42c ./I2C_Program.o
                                 0x4a4 (size before relaxing)
- .stab          0x00000b58      0x474 ./I2C_main_slave.o
-                                0x4ec (size before relaxing)
- .stab          0x00000fcc      0xd68 ./LCD_program.o
+ .stab          0x00000b58      0x480 ./I2C_main_slave.o
+                                0x4f8 (size before relaxing)
+ .stab          0x00000fd8      0xd68 ./LCD_program.o
                                 0xf78 (size before relaxing)
 
 .stabstr        0x00000000      0xbfa
