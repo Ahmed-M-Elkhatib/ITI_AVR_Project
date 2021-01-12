@@ -32,6 +32,9 @@ endif
 LSS += \
 I2C_Master.lss \
 
+FLASH_IMAGE += \
+I2C_Master.hex \
+
 SIZEDUMMY += \
 sizedummy \
 
@@ -53,6 +56,12 @@ I2C_Master.lss: I2C_Master.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
+I2C_Master.hex: I2C_Master.elf
+	@echo 'Create Flash image (ihex format)'
+	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex I2C_Master.elf  "I2C_Master.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 sizedummy: I2C_Master.elf
 	@echo 'Invoking: Print Size'
 	-avr-size --format=avr --mcu=atmega32 I2C_Master.elf
@@ -61,10 +70,10 @@ sizedummy: I2C_Master.elf
 
 # Other Targets
 clean:
-	-$(RM) $(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) I2C_Master.elf
+	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) I2C_Master.elf
 	-@echo ' '
 
-secondary-outputs: $(LSS) $(SIZEDUMMY)
+secondary-outputs: $(LSS) $(FLASH_IMAGE) $(SIZEDUMMY)
 
 .PHONY: all clean dependents
 .SECONDARY:
