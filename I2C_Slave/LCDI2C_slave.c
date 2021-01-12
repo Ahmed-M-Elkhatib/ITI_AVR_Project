@@ -7,10 +7,12 @@
 #include "STD_TYPES.h"
 #include "I2C_Interface.h"
 #include "LCDI2C_slave.h"
+#include "LCD_interface.h"
+#include "avr/delay.h"
 
 extern u8 flag;   // what does this do ? //this flag to determine the first byte ( command) at only the first receive operation then all received
-										//data will received in byte2 (as temp variable)
-									   // so when flag ==0 this means that i have new connection and i need to read byte1 to know the required action
+extern u8 byte1	;							//data will received in byte2 (as temp variable)
+extern u8 byte2	;									   // so when flag ==0 this means that i have new connection and i need to read byte1 to know the required action
 									  // then when flag==1 this means all data we receiving now are data and i don,t need to byte 1 just all data
 									 //will received by byte2 as a temp variable
 
@@ -28,7 +30,6 @@ void Receive_2Byte(u8* Copy_byte1,u8* Copy_byte2)
 void Receive_String(u8* buffer)
 {
 	u8 i = 0;
-	u8 byte1=0,byte2=0;
 
 	while(byte2!='\0')
 	{
@@ -53,14 +54,14 @@ void Receive_String(u8* buffer)
 
 void Receive_CGram(u8* buffer)
 {
-	u8 byte1=0,byte2=0;
-
+	LCD_SetCGRam(byte2);
+	_delay_ms(50);
 	for (u8 i=0;i<8;i++)
 	{
 		buffer[i]=byte2;
 		Receive_2Byte(&byte1,&byte2);
 	}
-
+	LCD_VidSendCharToCGRam(buffer);
 	flag=0;
 }
 

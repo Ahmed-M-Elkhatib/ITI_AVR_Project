@@ -139,11 +139,18 @@ void LCD_I2C_SendData(u8 Copy_u8Data)
 	I2C_stop();
 }
 
-void LCD_I2C_SendFloat(f32 Copy_u8Fnum){
-
-	s16 Int=(s16)Copy_u8Fnum;
-	s16 Float=(s16) ((Copy_u8Fnum -Int) *100);
-	Float *= -1;
+void LCD_I2C_SendFloat(f32 Copy_f32Fnum,u8 Copy_u8res){
+	u32 e=1;
+	s32 Int=(s32)Copy_f32Fnum;
+	for(u8 i=0;i<Copy_u8res;i++)
+	{
+		e=e*10;
+	}
+	s32 Float=(s32) ((Copy_f32Fnum -(f32)Int) *e);
+	if (Copy_f32Fnum<0)
+	{
+		Float *= -1;
+	}
 	LCD_I2C_SendNum(Int);
 	LCD_I2C_SendData('.');
 	LCD_I2C_SendNum(Float);
@@ -168,7 +175,7 @@ void LCD_I2C_SetCGRAMAdress(u8 Copy_U8Address){
 }
 
 
-void LCD_I2C_WriteInCGRAM(u8 *Copy_U8ptr)
+void LCD_I2C_WriteInCGRAM(u8 *Copy_U8ptr,u8 Copy_u8location)
 {
 //CGRAMData
 
@@ -180,11 +187,15 @@ void LCD_I2C_WriteInCGRAM(u8 *Copy_U8ptr)
 	I2C_select_slave(5,0);
 	_delay_ms(100);
 	I2C_Master_send_data(LCD_I2C_CGRAMData);
-
-	for(i = 0; i<8;i++){
-		_delay_ms(100);
-		I2C_Master_send_data(Copy_U8ptr[i]);
+	_delay_ms(100);
+	I2C_Master_send_data(Copy_u8location);
+	for(i = 0; i<8;i++)
+	{
+	_delay_ms(100);
+	I2C_Master_send_data(Copy_U8ptr[i]);
 	}
 	_delay_ms(10);
 	I2C_stop();
+	_delay_ms(100);
+	LCD_I2C_SendCommand(0x80); /// set DDRam pointer
 }

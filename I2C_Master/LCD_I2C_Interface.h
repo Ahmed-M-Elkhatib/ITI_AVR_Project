@@ -27,12 +27,11 @@ void LCD_I2C_SendData	(u8 );
 
 void LCD_I2C_SendString	(char* );
 void LCD_I2C_SendNum	(s32 );
-void LCD_I2C_SendFloat	(f32 );
+void LCD_I2C_SendFloat(f32 Copy_f32Fnum,u8 Copy_u8res);
 
 void LCD_I2C_SetPosition(u8 ,u8);
 
+void LCD_I2C_WriteInCGRAM(u8 *Copy_U8ptr,u8 Copy_u8location);
 
-void LCD_I2C_SetCGRAMAdress	(u8 );
-void LCD_I2C_WriteInCGRAM	(u8 *);
 
 #endif /* LCD_I2C_INTERFACE_H_ */

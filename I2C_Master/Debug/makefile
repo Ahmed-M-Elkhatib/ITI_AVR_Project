@@ -46,7 +46,7 @@ all: I2C_Master.elf secondary-outputs
 I2C_Master.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,I2C_Master.map -mmcu=atmega32 -o "I2C_Master.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,I2C_Master.map -mmcu=atmega16 -o "I2C_Master.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -64,7 +64,7 @@ I2C_Master.hex: I2C_Master.elf
 
 sizedummy: I2C_Master.elf
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega32 I2C_Master.elf
+	-avr-size --format=avr --mcu=atmega16 I2C_Master.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 

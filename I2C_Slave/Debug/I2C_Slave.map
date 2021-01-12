@@ -3,21 +3,21 @@ Archive member included because of file (symbol)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
                               ./LCD_program.o (__udivmodhi4)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                              e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o (exit)
+                              e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o (exit)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
                               ./I2C_main_slave.o (__do_clear_bss)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_fixunssfsi.o)
-                              ./LCD_program.o (__fixunssfsi)
+                              ./LCDI2C_slave.o (__fixunssfsi)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_addsub_sf.o)
                               e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_fixunssfsi.o) (__subsf3)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mul_sf.o)
-                              ./LCD_program.o (__mulsf3)
+                              ./LCDI2C_slave.o (__mulsf3)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_gt_sf.o)
-                              ./LCD_program.o (__gtsf2)
+                              ./LCDI2C_slave.o (__gtsf2)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ge_sf.o)
                               e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_fixunssfsi.o) (__gesf2)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_lt_sf.o)
-                              ./LCD_program.o (__ltsf2)
+                              ./LCDI2C_slave.o (__ltsf2)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_sf_to_si.o)
                               e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_fixunssfsi.o) (__fixsfsi)
 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_thenan_sf.o)
@@ -48,7 +48,7 @@ signature        0x00840000         0x00000400         rw !x
 
 Linker script and memory map
 
-LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
 LOAD ./DIO_Program.o
 LOAD ./I2C_Program.o
 LOAD ./I2C_main_slave.o
@@ -148,9 +148,9 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x2628
+.text           0x00000000     0x271c
  *(.vectors)
- .vectors       0x00000000       0x54 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .vectors       0x00000000       0x54 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
                 0x00000000                __vectors
                 0x00000000                __vector_default
  *(.vectors)
@@ -175,13 +175,13 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x00000054        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .init0         0x00000054        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
                 0x00000054                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x00000054        0xc e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .init2         0x00000054        0xc e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
  *(.init2)
  *(.init3)
  *(.init3)
@@ -200,10 +200,10 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x00000086        0x8 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .init9         0x00000086        0x8 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
  *(.init9)
  *(.text)
- .text          0x0000008e        0x4 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .text          0x0000008e        0x4 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
                 0x0000008e                __vector_1
                 0x0000008e                __vector_12
                 0x0000008e                __bad_interrupt
@@ -308,61 +308,61 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
  .text.I2C_slave_init
                 0x00001776       0x1e ./I2C_Program.o
                 0x00001776                I2C_slave_init
- .text.main     0x00001794       0x8c ./I2C_main_slave.o
+ .text.main     0x00001794       0x90 ./I2C_main_slave.o
                 0x00001794                main
  .text.Receive_2Byte
-                0x00001820       0x4c ./LCDI2C_slave.o
-                0x00001820                Receive_2Byte
+                0x00001824       0x4c ./LCDI2C_slave.o
+                0x00001824                Receive_2Byte
  .text.Receive_String
-                0x0000186c       0x78 ./LCDI2C_slave.o
-                0x0000186c                Receive_String
+                0x00001870       0x70 ./LCDI2C_slave.o
+                0x00001870                Receive_String
  .text.Receive_CGram
-                0x000018e4       0x5e ./LCDI2C_slave.o
-                0x000018e4                Receive_CGram
+                0x000018e0      0x156 ./LCDI2C_slave.o
+                0x000018e0                Receive_CGram
  .text.LCD_VidSendData
-                0x00001942      0x220 ./LCD_program.o
-                0x00001942                LCD_VidSendData
+                0x00001a36      0x220 ./LCD_program.o
+                0x00001a36                LCD_VidSendData
  .text.LCD_VidSendCommand
-                0x00001b62      0x220 ./LCD_program.o
-                0x00001b62                LCD_VidSendCommand
+                0x00001c56      0x220 ./LCD_program.o
+                0x00001c56                LCD_VidSendCommand
  .text.LCD_VidInt
-                0x00001d82      0x3ee ./LCD_program.o
-                0x00001d82                LCD_VidInt
+                0x00001e76      0x3ee ./LCD_program.o
+                0x00001e76                LCD_VidInt
  .text.LCD_VidSendStr
-                0x00002170      0x240 ./LCD_program.o
-                0x00002170                LCD_VidSendStr
+                0x00002264      0x240 ./LCD_program.o
+                0x00002264                LCD_VidSendStr
  .text.LCD_VidSendNum
-                0x000023b0       0xe0 ./LCD_program.o
-                0x000023b0                LCD_VidSendNum
+                0x000024a4       0xe0 ./LCD_program.o
+                0x000024a4                LCD_VidSendNum
  .text.LCD_VidShiftDispaly
-                0x00002490       0x60 ./LCD_program.o
-                0x00002490                LCD_VidShiftDispaly
+                0x00002584       0x60 ./LCD_program.o
+                0x00002584                LCD_VidShiftDispaly
  .text.LCD_VidCLR
-                0x000024f0       0x14 ./LCD_program.o
-                0x000024f0                LCD_VidCLR
+                0x000025e4       0x14 ./LCD_program.o
+                0x000025e4                LCD_VidCLR
  .text.LCD_SetCGRam
-                0x00002504       0x22 ./LCD_program.o
-                0x00002504                LCD_SetCGRam
+                0x000025f8       0x22 ./LCD_program.o
+                0x000025f8                LCD_SetCGRam
  .text.LCD_SetDDRam
-                0x00002526       0x1c ./LCD_program.o
-                0x00002526                LCD_SetDDRam
+                0x0000261a       0x1c ./LCD_program.o
+                0x0000261a                LCD_SetDDRam
  .text.LCD_VidSendCharToCGRam
-                0x00002542       0x4c ./LCD_program.o
-                0x00002542                LCD_VidSendCharToCGRam
- .text.libgcc   0x0000258e       0x28 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
-                0x0000258e                __udivmodhi4
- .text.libgcc   0x000025b6        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x000025b6        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
- .text.libgcc   0x000025b6       0x38 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x000025b6                __prologue_saves__
- .text.libgcc   0x000025ee       0x36 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x000025ee                __epilogue_restores__
- .text.libgcc   0x00002624        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
-                0x00002624                . = ALIGN (0x2)
+                0x00002636       0x4c ./LCD_program.o
+                0x00002636                LCD_VidSendCharToCGRam
+ .text.libgcc   0x00002682       0x28 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                0x00002682                __udivmodhi4
+ .text.libgcc   0x000026aa        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x000026aa        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x000026aa       0x38 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x000026aa                __prologue_saves__
+ .text.libgcc   0x000026e2       0x36 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x000026e2                __epilogue_restores__
+ .text.libgcc   0x00002718        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+                0x00002718                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00002624        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x00002624                exit
-                0x00002624                _exit
+ .fini9         0x00002718        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x00002718                exit
+                0x00002718                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -381,14 +381,14 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00002624        0x4 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x00002718        0x4 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00002628                _etext = .
+                0x0000271c                _etext = .
 
-.data           0x00800060        0x8 load address 0x00002628
+.data           0x00800060        0x8 load address 0x0000271c
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
- .data          0x00800060        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .data          0x00800060        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
  .data          0x00800060        0x0 ./DIO_Program.o
  .data          0x00800060        0x0 ./I2C_Program.o
  .data          0x00800060        0x0 ./I2C_main_slave.o
@@ -423,7 +423,7 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
 .bss            0x00800068       0x53
                 0x00800068                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x00800068        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .bss           0x00800068        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
  .bss           0x00800068        0x0 ./DIO_Program.o
  .bss           0x00800068        0x0 ./I2C_Program.o
  .bss           0x00800068        0x0 ./I2C_main_slave.o
@@ -460,8 +460,8 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
                 0x008000ba                flag
  *(COMMON)
                 0x008000bb                PROVIDE (__bss_end, .)
-                0x00002628                __data_load_start = LOADADDR (.data)
-                0x00002630                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000271c                __data_load_start = LOADADDR (.data)
+                0x00002724                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x008000bb        0x0
                 0x008000bb                PROVIDE (__noinit_start, .)
@@ -486,21 +486,21 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x210c
+.stab           0x00000000     0x2028
  *(.stab)
  .stab          0x00000000      0x738 ./DIO_Program.o
  .stab          0x00000738      0x42c ./I2C_Program.o
                                 0x4a4 (size before relaxing)
- .stab          0x00000b64      0x3a8 ./I2C_main_slave.o
-                                0x420 (size before relaxing)
- .stab          0x00000f0c      0x300 ./LCDI2C_slave.o
-                                0x378 (size before relaxing)
- .stab          0x0000120c      0xf00 ./LCD_program.o
+ .stab          0x00000b64      0x3b4 ./I2C_main_slave.o
+                                0x42c (size before relaxing)
+ .stab          0x00000f18      0x3a8 ./LCDI2C_slave.o
+                                0x5ac (size before relaxing)
+ .stab          0x000012c0      0xd68 ./LCD_program.o
                                 0xf78 (size before relaxing)
 
-.stabstr        0x00000000     0x10c6
+.stabstr        0x00000000      0xcc4
  *(.stabstr)
- .stabstr       0x00000000     0x10c6 ./DIO_Program.o
+ .stabstr       0x00000000      0xcc4 ./DIO_Program.o
 
 .stab.excl
  *(.stab.excl)

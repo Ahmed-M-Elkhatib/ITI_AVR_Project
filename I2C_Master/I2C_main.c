@@ -16,13 +16,21 @@
 int main (void)
 {
 
-
+	u8 arr[8]={0x00,0x1B,0x1F,0x1F,0x0E,0x04,0x04,0x00};
 
 	LCD_I2C_init();
-	LCD_I2C_SendNum(20);
-	//LCD_I2C_SendFloat(10.0);
-	//LCD_I2C_SendString("/");
-	//LCD_I2C_SendString("Ahmed");
+	LCD_I2C_SendFloat(1254.1245,5);
+	_delay_ms(1000);
+	LCD_I2C_SendCommand(LCD_COMMAND_CLEARDISP);
+	LCD_I2C_SendFloat(-10.5,1);
+	_delay_ms(1000);
+	LCD_I2C_SendCommand(LCD_COMMAND_CLEARDISP);
+	LCD_I2C_SendFloat(32.54,2);
+	_delay_ms(1000);
+	LCD_I2C_SendCommand(LCD_COMMAND_CLEARDISP);
+	LCD_I2C_WriteInCGRAM(arr,0);
+	LCD_I2C_SendData(0);
+
 	while(1);
 
 }

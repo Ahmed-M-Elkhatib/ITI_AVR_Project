@@ -60,6 +60,7 @@ int main (void)
 		else if (byte1==DATA)
 		{
 			LCD_VidSendData(byte2);
+			flag=0;
 		}
 		else if (byte1==CGRAMData)
 		{
