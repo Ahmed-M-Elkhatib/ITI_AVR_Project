@@ -9,9 +9,10 @@
 #define LCDI2C_SLAVE_H_
 
 
+
 #define SLAVE_BUFFER_SIZE 40
 
-
+void Receive_CGram(u8* buffer);
 void Receive_2Byte(u8* Copy_char,u8* Copy_command);
 void Receive_String(u8* buffer);
 

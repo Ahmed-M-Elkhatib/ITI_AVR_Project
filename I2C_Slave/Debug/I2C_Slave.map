@@ -148,7 +148,7 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x25a4
+.text           0x00000000     0x2628
  *(.vectors)
  .vectors       0x00000000       0x54 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
                 0x00000000                __vectors
@@ -267,99 +267,102 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
                 0x00000d46      0x200 ./DIO_Program.o
                 0x00000d46                DIO_VidSetPin_Value
  .text.DIO_VidGetPin
-                0x00000f46       0xf2 ./DIO_Program.o
+                0x00000f46       0xf4 ./DIO_Program.o
                 0x00000f46                DIO_VidGetPin
  .text.DIO_VidToggelPin
-                0x00001038       0xfa ./DIO_Program.o
-                0x00001038                DIO_VidToggelPin
+                0x0000103a       0xfa ./DIO_Program.o
+                0x0000103a                DIO_VidToggelPin
  .text.DIO_VidSetPort_Direction
-                0x00001132       0xf2 ./DIO_Program.o
-                0x00001132                DIO_VidSetPort_Direction
+                0x00001134       0xf2 ./DIO_Program.o
+                0x00001134                DIO_VidSetPort_Direction
  .text.DIO_VidWriteOnPort
-                0x00001224       0x82 ./DIO_Program.o
-                0x00001224                DIO_VidWriteOnPort
+                0x00001226       0x82 ./DIO_Program.o
+                0x00001226                DIO_VidWriteOnPort
  .text.DIO_VidPullUp_Pin
-                0x000012a6       0xfa ./DIO_Program.o
-                0x000012a6                DIO_VidPullUp_Pin
+                0x000012a8       0xfa ./DIO_Program.o
+                0x000012a8                DIO_VidPullUp_Pin
  .text.DIO_VidPullDown_Pin
-                0x000013a0      0x104 ./DIO_Program.o
-                0x000013a0                DIO_VidPullDown_Pin
+                0x000013a2      0x104 ./DIO_Program.o
+                0x000013a2                DIO_VidPullDown_Pin
  .text.DIO_VidSetPort_Value
-                0x000014a4       0xf2 ./DIO_Program.o
-                0x000014a4                DIO_VidSetPort_Value
+                0x000014a6       0xf2 ./DIO_Program.o
+                0x000014a6                DIO_VidSetPort_Value
  .text.I2C_send_start
-                0x00001596       0x42 ./I2C_Program.o
-                0x00001596                I2C_send_start
+                0x00001598       0x42 ./I2C_Program.o
+                0x00001598                I2C_send_start
  .text.I2C_select_slave
-                0x000015d8       0x94 ./I2C_Program.o
-                0x000015d8                I2C_select_slave
+                0x000015da       0x94 ./I2C_Program.o
+                0x000015da                I2C_select_slave
  .text.I2C_Master_send_data
-                0x0000166c       0x38 ./I2C_Program.o
-                0x0000166c                I2C_Master_send_data
+                0x0000166e       0x38 ./I2C_Program.o
+                0x0000166e                I2C_Master_send_data
  .text.I2C_Slave_recive_data
-                0x000016a4       0x96 ./I2C_Program.o
-                0x000016a4                I2C_Slave_recive_data
+                0x000016a6       0x96 ./I2C_Program.o
+                0x000016a6                I2C_Slave_recive_data
  .text.I2C_stop
-                0x0000173a       0x16 ./I2C_Program.o
-                0x0000173a                I2C_stop
+                0x0000173c       0x16 ./I2C_Program.o
+                0x0000173c                I2C_stop
  .text.I2C_master_init
-                0x00001750       0x24 ./I2C_Program.o
-                0x00001750                I2C_master_init
+                0x00001752       0x24 ./I2C_Program.o
+                0x00001752                I2C_master_init
  .text.I2C_slave_init
-                0x00001774       0x1e ./I2C_Program.o
-                0x00001774                I2C_slave_init
- .text.main     0x00001792       0x68 ./I2C_main_slave.o
-                0x00001792                main
+                0x00001776       0x1e ./I2C_Program.o
+                0x00001776                I2C_slave_init
+ .text.main     0x00001794       0x8c ./I2C_main_slave.o
+                0x00001794                main
  .text.Receive_2Byte
-                0x000017fa       0x4c ./LCDI2C_slave.o
-                0x000017fa                Receive_2Byte
+                0x00001820       0x4c ./LCDI2C_slave.o
+                0x00001820                Receive_2Byte
  .text.Receive_String
-                0x00001846       0x78 ./LCDI2C_slave.o
-                0x00001846                Receive_String
+                0x0000186c       0x78 ./LCDI2C_slave.o
+                0x0000186c                Receive_String
+ .text.Receive_CGram
+                0x000018e4       0x5e ./LCDI2C_slave.o
+                0x000018e4                Receive_CGram
  .text.LCD_VidSendData
-                0x000018be      0x220 ./LCD_program.o
-                0x000018be                LCD_VidSendData
+                0x00001942      0x220 ./LCD_program.o
+                0x00001942                LCD_VidSendData
  .text.LCD_VidSendCommand
-                0x00001ade      0x220 ./LCD_program.o
-                0x00001ade                LCD_VidSendCommand
+                0x00001b62      0x220 ./LCD_program.o
+                0x00001b62                LCD_VidSendCommand
  .text.LCD_VidInt
-                0x00001cfe      0x3ee ./LCD_program.o
-                0x00001cfe                LCD_VidInt
+                0x00001d82      0x3ee ./LCD_program.o
+                0x00001d82                LCD_VidInt
  .text.LCD_VidSendStr
-                0x000020ec      0x240 ./LCD_program.o
-                0x000020ec                LCD_VidSendStr
+                0x00002170      0x240 ./LCD_program.o
+                0x00002170                LCD_VidSendStr
  .text.LCD_VidSendNum
-                0x0000232c       0xe0 ./LCD_program.o
-                0x0000232c                LCD_VidSendNum
+                0x000023b0       0xe0 ./LCD_program.o
+                0x000023b0                LCD_VidSendNum
  .text.LCD_VidShiftDispaly
-                0x0000240c       0x60 ./LCD_program.o
-                0x0000240c                LCD_VidShiftDispaly
+                0x00002490       0x60 ./LCD_program.o
+                0x00002490                LCD_VidShiftDispaly
  .text.LCD_VidCLR
-                0x0000246c       0x14 ./LCD_program.o
-                0x0000246c                LCD_VidCLR
+                0x000024f0       0x14 ./LCD_program.o
+                0x000024f0                LCD_VidCLR
  .text.LCD_SetCGRam
-                0x00002480       0x22 ./LCD_program.o
-                0x00002480                LCD_SetCGRam
+                0x00002504       0x22 ./LCD_program.o
+                0x00002504                LCD_SetCGRam
  .text.LCD_SetDDRam
-                0x000024a2       0x1c ./LCD_program.o
-                0x000024a2                LCD_SetDDRam
+                0x00002526       0x1c ./LCD_program.o
+                0x00002526                LCD_SetDDRam
  .text.LCD_VidSendCharToCGRam
-                0x000024be       0x4c ./LCD_program.o
-                0x000024be                LCD_VidSendCharToCGRam
- .text.libgcc   0x0000250a       0x28 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
-                0x0000250a                __udivmodhi4
- .text.libgcc   0x00002532        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x00002532        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
- .text.libgcc   0x00002532       0x38 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x00002532                __prologue_saves__
- .text.libgcc   0x0000256a       0x36 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x0000256a                __epilogue_restores__
- .text.libgcc   0x000025a0        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
-                0x000025a0                . = ALIGN (0x2)
+                0x00002542       0x4c ./LCD_program.o
+                0x00002542                LCD_VidSendCharToCGRam
+ .text.libgcc   0x0000258e       0x28 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                0x0000258e                __udivmodhi4
+ .text.libgcc   0x000025b6        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x000025b6        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x000025b6       0x38 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x000025b6                __prologue_saves__
+ .text.libgcc   0x000025ee       0x36 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x000025ee                __epilogue_restores__
+ .text.libgcc   0x00002624        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+                0x00002624                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000025a0        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x000025a0                exit
-                0x000025a0                _exit
+ .fini9         0x00002624        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x00002624                exit
+                0x00002624                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -378,11 +381,11 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000025a0        0x4 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x00002624        0x4 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000025a4                _etext = .
+                0x00002628                _etext = .
 
-.data           0x00800060        0x8 load address 0x000025a4
+.data           0x00800060        0x8 load address 0x00002628
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
@@ -417,7 +420,7 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
                 0x00800068                _edata = .
                 0x00800068                PROVIDE (__data_end, .)
 
-.bss            0x00800068       0x2c
+.bss            0x00800068       0x53
                 0x00800068                PROVIDE (__bss_start, .)
  *(.bss)
  .bss           0x00800068        0x0 e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
@@ -446,26 +449,26 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
  *(.bss*)
  .bss.buffer    0x00800068       0x28 ./I2C_main_slave.o
                 0x00800068                buffer
- .bss.buffer_index
-                0x00800090        0x1 ./I2C_main_slave.o
-                0x00800090                buffer_index
- .bss.byte1     0x00800091        0x1 ./I2C_main_slave.o
-                0x00800091                byte1
- .bss.byte2     0x00800092        0x1 ./I2C_main_slave.o
-                0x00800092                byte2
- .bss.flag      0x00800093        0x1 ./I2C_main_slave.o
-                0x00800093                flag
+ .bss.CGram_buffer
+                0x00800090       0x28 ./I2C_main_slave.o
+                0x00800090                CGram_buffer
+ .bss.byte1     0x008000b8        0x1 ./I2C_main_slave.o
+                0x008000b8                byte1
+ .bss.byte2     0x008000b9        0x1 ./I2C_main_slave.o
+                0x008000b9                byte2
+ .bss.flag      0x008000ba        0x1 ./I2C_main_slave.o
+                0x008000ba                flag
  *(COMMON)
-                0x00800094                PROVIDE (__bss_end, .)
-                0x000025a4                __data_load_start = LOADADDR (.data)
-                0x000025ac                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x008000bb                PROVIDE (__bss_end, .)
+                0x00002628                __data_load_start = LOADADDR (.data)
+                0x00002630                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800094        0x0
-                0x00800094                PROVIDE (__noinit_start, .)
+.noinit         0x008000bb        0x0
+                0x008000bb                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800094                PROVIDE (__noinit_end, .)
-                0x00800094                _end = .
-                0x00800094                PROVIDE (__heap_start, .)
+                0x008000bb                PROVIDE (__noinit_end, .)
+                0x008000bb                _end = .
+                0x008000bb                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -483,21 +486,21 @@ LOAD e:/iti/imt tools/sdk/imt_sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\li
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x2004
+.stab           0x00000000     0x210c
  *(.stab)
- .stab          0x00000000      0x72c ./DIO_Program.o
- .stab          0x0000072c      0x42c ./I2C_Program.o
+ .stab          0x00000000      0x738 ./DIO_Program.o
+ .stab          0x00000738      0x42c ./I2C_Program.o
                                 0x4a4 (size before relaxing)
- .stab          0x00000b58      0x378 ./I2C_main_slave.o
-                                0x3f0 (size before relaxing)
- .stab          0x00000ed0      0x234 ./LCDI2C_slave.o
-                                0x2ac (size before relaxing)
- .stab          0x00001104      0xf00 ./LCD_program.o
+ .stab          0x00000b64      0x3a8 ./I2C_main_slave.o
+                                0x420 (size before relaxing)
+ .stab          0x00000f0c      0x300 ./LCDI2C_slave.o
+                                0x378 (size before relaxing)
+ .stab          0x0000120c      0xf00 ./LCD_program.o
                                 0xf78 (size before relaxing)
 
-.stabstr        0x00000000     0x10af
+.stabstr        0x00000000     0x10c6
  *(.stabstr)
- .stabstr       0x00000000     0x10af ./DIO_Program.o
+ .stabstr       0x00000000     0x10c6 ./DIO_Program.o
 
 .stab.excl
  *(.stab.excl)

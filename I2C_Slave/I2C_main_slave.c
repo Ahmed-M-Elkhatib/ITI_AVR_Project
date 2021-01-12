@@ -14,26 +14,28 @@
 
 #include "LCDI2C_slave.h"
 
-#define NUM   	1
-#define STR   	2
-#define CMD		3
-
+#define NUM   		0
+#define STR   		4
+#define CMD			5
+#define DATA    	6
+#define CGRAMData	7
 
 
 u8 buffer[SLAVE_BUFFER_SIZE]={0};
-u8 buffer_index=0;
-
+u8 CGram_buffer[SLAVE_BUFFER_SIZE]={0};
+//u8 buffer_index=0;
+//u8 CGram_buffer_index=0;
 u8 byte1=0,byte2=0;
 u8 flag=0;       // this flag to
 
 int main (void)
 {
 
-	LCD_VidInt(); // intialize LCD with a default configuration
-				  // because the user can send a configuration or not
-				  // so some default configuration must be guranteed
-	              // if the user wants to change it , he simply can by sending
-				 // any configuration commands
+	LCD_VidInt(); 		// intialize LCD with a default configuration
+				 	   // because the user can send a configuration or not
+				      // so some default configuration must be guranteed
+	                 // if the user wants to change it , he simply can by sending
+				    // any configuration commands
 
 	I2C_slave_init();
 
@@ -55,7 +57,14 @@ int main (void)
 			Receive_String(buffer);
 			LCD_VidSendStr(buffer);
 		}
-
+		else if (byte1==DATA)
+		{
+			LCD_VidSendData(byte2);
+		}
+		else if (byte1==CGRAMData)
+		{
+			Receive_CGram(CGram_buffer);
+		}
 	}
 }
 

@@ -48,17 +48,19 @@ void LCD_I2C_init()
 	_delay_ms(10);
 	I2C_stop();
 }
-void LCD_I2C_SendNum(s16 Copy_u16num){
+void LCD_I2C_SendNum(s32 Copy_u32num){
 
 	// For checking if the number is negative or not
-	u8 signindicate = (Copy_u16num<0)? 1:0;
+	u8 signindicate = (Copy_u32num<0)? 1:0;
 
 	if(signindicate){
 		// The number is -ve
-		Copy_u16num = Copy_u16num * -1;
+		Copy_u32num = Copy_u32num * -1;
 	}
-	u8 LSB=(u8)Copy_u16num;
-	u8 MSB= (u8)(Copy_u16num>>8);
+	u8 LSB1=(u8)Copy_u32num;
+	u8 LSB2=(u8)(Copy_u32num>>8);
+	u8 MSB1=(u8)(Copy_u32num>>16);
+	u8 MSB2=(u8)(Copy_u32num>>24);
 	if(signindicate){
 		LCD_I2C_SendData('-');
 
@@ -69,22 +71,18 @@ void LCD_I2C_SendNum(s16 Copy_u16num){
 	I2C_select_slave(5,0);
 	_delay_ms(200);
 
-
 	I2C_Master_send_data(LCD_I2C_Integer);
 
 
 	_delay_ms(200);
-	I2C_Master_send_data(LSB);
-	if (MSB==0)
-	{
+	I2C_Master_send_data(LSB1);
+	_delay_ms(200);
+	I2C_Master_send_data(LSB2);
+	_delay_ms(200);
+	I2C_Master_send_data(MSB1);
+	_delay_ms(200);
+	I2C_Master_send_data(MSB2);
 
-	}
-	else
-	{
-		_delay_ms(200);
-		I2C_Master_send_data(MSB);
-
-	}
 	_delay_ms(10);
 	I2C_stop();
 }

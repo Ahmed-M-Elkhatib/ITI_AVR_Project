@@ -51,4 +51,17 @@ void Receive_String(u8* buffer)
 }
 
 
+void Receive_CGram(u8* buffer)
+{
+	u8 byte1=0,byte2=0;
+
+	for (u8 i=0;i<8;i++)
+	{
+		buffer[i]=byte2;
+		Receive_2Byte(&byte1,&byte2);
+	}
+
+	flag=0;
+}
+
 

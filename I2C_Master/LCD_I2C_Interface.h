@@ -26,7 +26,7 @@ void LCD_I2C_SendData	(u8 );
 
 
 void LCD_I2C_SendString	(char* );
-void LCD_I2C_SendNum	(s16 );
+void LCD_I2C_SendNum	(s32 );
 void LCD_I2C_SendFloat	(f32 );
 
 void LCD_I2C_SetPosition(u8 ,u8);

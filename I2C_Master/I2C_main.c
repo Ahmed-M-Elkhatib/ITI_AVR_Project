@@ -15,19 +15,15 @@
 
 int main (void)
 {
-	/*
-		//LCD_I2C_init();
-	LCD_I2C_SendNum(125);
-	LCD_I2C_SendString("/");
-	LCD_I2C_SendString("Ahmed");
-	*/
+
 
 
 	LCD_I2C_init();
-	LCD_I2C_SendFloat(-12.5);
-		LCD_I2C_SendString("/");
-		LCD_I2C_SendString("Ahmed");
-		while(1);
+	LCD_I2C_SendNum(20);
+	//LCD_I2C_SendFloat(10.0);
+	//LCD_I2C_SendString("/");
+	//LCD_I2C_SendString("Ahmed");
+	while(1);
 
 }
 
