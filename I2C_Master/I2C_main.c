@@ -7,13 +7,13 @@
 #include "STD_TYPES.h"
 #include "DIO_Interface.h"
 #include "I2C_Interface.h"
-#include "avr/delay.h"
+#include <util/delay.h>
 #include "BIT_MATH.h"
 #include "I2C_PRIVATE.h"
 #include "LCD_interface.h"
 #include "LCD_I2C_Interface.h"
 
-void main (void)
+int main (void)
 {
 	/*
 		//LCD_I2C_init();

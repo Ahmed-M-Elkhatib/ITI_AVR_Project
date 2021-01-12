@@ -7,19 +7,18 @@
 #include "STD_TYPES.h"
 #include "DIO_Interface.h"
 #include "I2C_Interface.h"
-#include "avr/delay.h"
+#include <util/delay.h>
 #include "BIT_MATH.h"
 #include "LCD_interface.h"
 #include "LCD_I2C_Interface.h"
 
 #include "LCD_I2C_Config.h"
 
-#define LCD_I2C_Integer						0
+#define LCD_I2C_Integer				0
 
-#define LCD_I2C_String  	 					4
-#define LCD_I2C_Command 				5
-#define LCD_I2C_Data 						6
-
+#define LCD_I2C_String  	 		4
+#define LCD_I2C_Command 			5
+#define LCD_I2C_Data 				6
 #define LCD_I2C_CGRAMData			7
 
 void LCD_I2C_init()
@@ -89,7 +88,7 @@ void LCD_I2C_SendNum(s16 Copy_u16num){
 	_delay_ms(10);
 	I2C_stop();
 }
-void LCD_I2C_SendString(u8* Copy_u8str)
+void LCD_I2C_SendString(char* Copy_u8str)
 {
 
 	u8 i=0;
