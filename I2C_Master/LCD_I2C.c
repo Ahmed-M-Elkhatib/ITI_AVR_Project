@@ -8,6 +8,7 @@
 #include "DIO_Interface.h"
 #include "I2C_Interface.h"
 #include <util/delay.h>
+#include <stdlib.h>
 #include "BIT_MATH.h"
 #include "LCD_interface.h"
 #include "LCD_I2C_Interface.h"
@@ -48,9 +49,12 @@ void LCD_I2C_init()
 	_delay_ms(10);
 	I2C_stop();
 }
-void LCD_I2C_SendNum(s32 Copy_u32num){
-
-	// For checking if the number is negative or not
+void LCD_I2C_SendNum(s32 Copy_u32num)
+{
+	char number[10]={0};
+	itoa(Copy_u32num,number,10);
+	LCD_I2C_SendString(number);
+	/*// For checking if the number is negative or not
 	u8 signindicate = (Copy_u32num<0)? 1:0;
 
 	if(signindicate){
@@ -84,7 +88,7 @@ void LCD_I2C_SendNum(s32 Copy_u32num){
 	I2C_Master_send_data(MSB2);
 
 	_delay_ms(10);
-	I2C_stop();
+	I2C_stop();*/
 }
 void LCD_I2C_SendString(char* Copy_u8str)
 {
