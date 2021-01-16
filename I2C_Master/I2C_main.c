@@ -19,6 +19,8 @@ int main (void)
 	u8 arr[8]={0x00,0x1B,0x1F,0x1F,0x0E,0x04,0x04,0x00};
 
 	LCD_I2C_init();
+//	LCD_I2C_SendCommand(LCD_COMMAND_CLEARDISP);
+
 	LCD_I2C_SendFloat(1254.1245,5);
 	_delay_ms(1000);
 	LCD_I2C_SendCommand(LCD_COMMAND_CLEARDISP);

@@ -11,6 +11,7 @@
 	 if ((TWSR & 0xF8) != 0x08){return 0;}
 	 else{return 1;}
  }
+
  u8 I2C_select_slave(u8 Copy_slave_add,u8 Copy_W_R)
  {u8 status=0;
 	 if (Copy_W_R==0)         // write

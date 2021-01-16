@@ -15,6 +15,11 @@
 
 #include "LCD_I2C_Config.h"
 
+//#define WITH_DELAY
+
+#define DELAY_GCD   1
+#define DELAY_FACTOR 5
+
 #define LCD_I2C_Integer				0
 
 #define LCD_I2C_String  	 		4
@@ -30,98 +35,110 @@ void LCD_I2C_init()
 	_delay_ms(40);
 	I2C_master_init();
 	_delay_ms(120);
+
+
+
 	I2C_send_start();
 	I2C_select_slave(5,0);
-	_delay_ms(100);
+
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
+	I2C_Master_send_data(LCD_I2C_Command);
+
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
+	I2C_Master_send_data(command1);
+
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 
 	I2C_Master_send_data(LCD_I2C_Command);
-	_delay_ms(100);
-	I2C_Master_send_data(command1);
-	_delay_ms(100);
-	I2C_Master_send_data(LCD_I2C_Command);
-	_delay_ms(100);
+
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
+
 	I2C_Master_send_data(command2);
-	_delay_ms(100);
+
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
+
 	I2C_Master_send_data(LCD_I2C_Command);
-	_delay_ms(100);
+
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
+
 	I2C_Master_send_data(LCD_COMMAND_CLEARDISP);
 
-	_delay_ms(10);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD);
+#endif
+
 	I2C_stop();
 }
+
 void LCD_I2C_SendNum(s32 Copy_u32num)
 {
 	char number[10]={0};
 	itoa(Copy_u32num,number,10);
 	LCD_I2C_SendString(number);
-	/*// For checking if the number is negative or not
-	u8 signindicate = (Copy_u32num<0)? 1:0;
-
-	if(signindicate){
-		// The number is -ve
-		Copy_u32num = Copy_u32num * -1;
-	}
-	u8 LSB1=(u8)Copy_u32num;
-	u8 LSB2=(u8)(Copy_u32num>>8);
-	u8 MSB1=(u8)(Copy_u32num>>16);
-	u8 MSB2=(u8)(Copy_u32num>>24);
-	if(signindicate){
-		LCD_I2C_SendData('-');
-
-	}
-
-	// Start the transmission
-	I2C_send_start();
-	I2C_select_slave(5,0);
-	_delay_ms(200);
-
-	I2C_Master_send_data(LCD_I2C_Integer);
-
-
-	_delay_ms(200);
-	I2C_Master_send_data(LSB1);
-	_delay_ms(200);
-	I2C_Master_send_data(LSB2);
-	_delay_ms(200);
-	I2C_Master_send_data(MSB1);
-	_delay_ms(200);
-	I2C_Master_send_data(MSB2);
-
-	_delay_ms(10);
-	I2C_stop();*/
 }
+
 void LCD_I2C_SendString(char* Copy_u8str)
 {
 
 	u8 i=0;
 	I2C_send_start();
 	I2C_select_slave(5,0);
-	_delay_ms(100);
+
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 
 	I2C_Master_send_data(LCD_I2C_String);
-	_delay_ms(100);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 
 	while(Copy_u8str[i]!='\0')
 	{
 		I2C_Master_send_data(Copy_u8str[i++]);
-		_delay_ms(100);
+#ifdef WITH_DELAY
+		_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
+
 	}
 
 	I2C_Master_send_data('\0');
-	_delay_ms(10);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD);
+#endif
 	I2C_stop();
 }
+
+
 void LCD_I2C_SendCommand(u8 Copy_u8Command)
 {
 	I2C_send_start();
 	I2C_select_slave(5,0);
-	_delay_ms(100);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 
 	I2C_Master_send_data(LCD_I2C_Command);
-	_delay_ms(100);
-
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 	I2C_Master_send_data(Copy_u8Command);
-	_delay_ms(10);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD);
+#endif
+
 	I2C_stop();
 }
 
@@ -129,13 +146,18 @@ void LCD_I2C_SendData(u8 Copy_u8Data)
 {
 	I2C_send_start();
 	I2C_select_slave(5,0);
-	_delay_ms(100);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 
 	I2C_Master_send_data(LCD_I2C_Data);
-	_delay_ms(100);
-
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 	I2C_Master_send_data(Copy_u8Data);
-	_delay_ms(10);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD);
+#endif
 	I2C_stop();
 }
 
@@ -157,18 +179,15 @@ void LCD_I2C_SendFloat(f32 Copy_f32Fnum,u8 Copy_u8res){
 }
 
 
-void LCD_I2C_SetPosition(u8 Copy_U8PosX,u8 Copy_U8PosY){
-/*
-	if(0== Copy_U8PosX)
-		LCD_send_command(128+Copy_U8PosY);
-	else if(1==Copy_U8PosX)
-		LCD_send_command(128+64+Copy_U8PosY);
-*/
+void LCD_I2C_SetPosition(u8 Copy_U8PosX,u8 Copy_U8PosY)
+{
+
 	LCD_I2C_SendCommand(0x80 | (Copy_U8PosX & 0x3F) | (GET_BIT(Copy_U8PosY,0) << 6));
 }
 
 
-void LCD_I2C_SetCGRAMAdress(u8 Copy_U8Address){
+void LCD_I2C_SetCGRAMAdress(u8 Copy_U8Address)
+{
 
 	LCD_I2C_SendCommand	(0b01000000 | Copy_U8Address);
 
@@ -183,19 +202,29 @@ void LCD_I2C_WriteInCGRAM(u8 *Copy_U8ptr,u8 Copy_u8location)
 	_delay_ms(40);
 	I2C_master_init();
 	_delay_ms(120);
+
 	I2C_send_start();
 	I2C_select_slave(5,0);
-	_delay_ms(100);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 	I2C_Master_send_data(LCD_I2C_CGRAMData);
-	_delay_ms(100);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 	I2C_Master_send_data(Copy_u8location);
 	for(i = 0; i<8;i++)
 	{
-	_delay_ms(100);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
+#endif
 	I2C_Master_send_data(Copy_U8ptr[i]);
 	}
-	_delay_ms(10);
+#ifdef WITH_DELAY
+	_delay_ms(DELAY_GCD);
+#endif
 	I2C_stop();
-	_delay_ms(100);
+
+	_delay_ms(DELAY_GCD*DELAY_FACTOR);
 	LCD_I2C_SendCommand(0x80); /// set DDRam pointer
 }

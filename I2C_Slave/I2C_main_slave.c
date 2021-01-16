@@ -36,7 +36,7 @@ int main (void)
 				      // so some default configuration must be guranteed
 	                 // if the user wants to change it , he simply can by sending
 				    // any configuration commands
-
+	LCD_VidSendStr((u8*)"Slave Waiting...");
 	I2C_slave_init();
 
 	while(1)

@@ -1,7 +1,7 @@
 
 #include"STD_TYPES.h"
 #include"BIT_MATH.h"
-#include <avr/delay.h>
+#include <util/delay.h>
 #include"DIO_Interface.h"
 #include"LCD_interface.h"
 #include "LCD_cofig.h"
