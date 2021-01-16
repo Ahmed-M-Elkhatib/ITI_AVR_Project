@@ -17,49 +17,67 @@
 
 
 
-u8 buffer[SLAVE_BUFFER_SIZE]={0};
+u8 buffer[SLAVE_BUFFER_SIZE]={'A','B','C','D'};
 u8 CGram_buffer[CGRAM_BUFFER_SIZE]={0};
 
 u8 byte1=0,byte2=0;
-u8 flag=0;       // this flag to
+u8 flag=0;
 
 int main (void)
 {
 
-	LCD_VidInt(); 		// intialize LCD with a default configuration
-				 	   // because the user can send a configuration or not
-				      // so some default configuration must be guranteed
-	                 // if the user wants to change it , he simply can by sending
-				    // any configuration commands
-	LCD_VidSendStr((u8*)"Slave Waiting...");
-	I2C_slave_init();
-
+	LCDI2C_Init();
+	LCD_VidPrintString("Slave Waiting...",0);
+	_delay_ms(1000);
 	while(1)
 	{
-		Receive_2Byte(&byte1,&byte2);
+		LCDI2C_Receive_2Byte(&byte1,&byte2);
+		_delay_ms(10);
 		if (byte1==CMD)
 		{
+			/*LCD_VidPrintString("RX: CMD",0);
+			_delay_ms(1000);
+			LCD_VidSendCommand(CLEAR_DISPLAY);
+			_delay_ms(1000);*/
+
+
 			LCD_VidSendCommand(byte2);
 			flag=0;
 		}
-		else if (byte1==NUM)
-		{
-			LCD_VidSendNum(byte2);
-			flag=0;
-		}
+//		else if (byte1==NUM)
+//		{
+//			LCD_VidPrintString("RX: NUM",0);
+//			_delay_ms(1000);
+//			LCD_VidSendCommand(CLEAR_DISPLAY);
+//			_delay_ms(1000);
+//
+//			LCD_VidPrintNum((s32)byte2);
+//			flag=0;
+//		}
 		else if(byte1==STR)
 		{
-			Receive_String(buffer);
-			LCD_VidSendStr(buffer);
+			/*LCD_VidPrintString("RX: STR",0);
+			_delay_ms(1000);
+			LCD_VidSendCommand(CLEAR_DISPLAY);
+			_delay_ms(1000);*/
+
+
+			LCDI2C_Receive_String(buffer);
+			LCD_VidPrintString((char*)buffer,0);
 		}
 		else if (byte1==DATA)
 		{
-			LCD_VidSendData(byte2);
+			/*LCD_VidPrintString("RX: DATA",0);
+			_delay_ms(1000);
+			LCD_VidSendCommand(CLEAR_DISPLAY);
+			_delay_ms(1000);*/
+
+			LCD_VidSendChar(byte2);
 			flag=0;
 		}
 		else if (byte1==CGRAMData)
 		{
-			Receive_CGram(CGram_buffer);
+			LCDI2C_Receive_CGram(CGram_buffer,byte2);
 		}
 	}
 }

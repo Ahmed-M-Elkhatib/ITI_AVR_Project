@@ -23,19 +23,19 @@ typedef enum
 
 typedef struct
 {
-	int32_t front;
-	int32_t back;
-	uint32_t buf_size;
-	uint32_t count;
+	s32 front;
+	s32 back;
+	u32 buf_size;
+	u32 count;
 	DATATYPE* data;
 }queue_type;
 
 
-void queue_Init( queue_type* me, uint32_t buffer_size, DATATYPE* data);
+void queue_Init( queue_type* me, u32 buffer_size, DATATYPE* data);
 void queue_Push( queue_type* me, DATATYPE data);
 int queue_Pop( queue_type* me);
 int queue_Peek( queue_type* me);
-uint32_t queue_GetCount(queue_type* me);
+u32 queue_GetCount(queue_type* me);
 void queue_Clear(queue_type* me);
 
 BUF_STATUS queue_isEmpty( queue_type* me);

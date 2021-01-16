@@ -10,7 +10,7 @@
 #include "queue_buffer.h"
 
 // Circular queue using arrays
-void queue_Init( queue_type* me, uint32_t buffer_size, DATATYPE* data)
+void queue_Init( queue_type* me, u32 buffer_size, DATATYPE* data)
 {
 	if (me != NULL)
 	{
@@ -67,7 +67,7 @@ int queue_Peek( queue_type* me)
 	}
 	return peek;
 }
-uint32_t queue_GetCount(queue_type* me)
+u32 queue_GetCount(queue_type* me)
 {
 	return me->count;
 }

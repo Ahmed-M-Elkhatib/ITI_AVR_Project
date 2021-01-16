@@ -10,7 +10,7 @@
 
 
 
-#define NUM   		0
+//#define NUM   		0
 #define STR   		4
 #define CMD			5
 #define DATA    	6
@@ -19,7 +19,7 @@
 
 void LCDI2C_Init(void);
 void LCDI2C_Receive_2Byte( u8*byte1,u8*byte2);
-void LCDI2C_Receive_String(char*buffer);
-void LCDI2C_Receive_CGram(u8*CGram_buffer);
+void LCDI2C_Receive_String(u8*buffer);
+void LCDI2C_Receive_CGram(u8*CGram_buffer, u8 CGram_address);
 
 #endif /* LCDI2C_LCDI2C_INTERFACE_H_ */

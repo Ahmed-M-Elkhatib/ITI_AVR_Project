@@ -9,7 +9,7 @@
 #define LCD_LCD_CONFIG_H_
 
 /* LCD data length MODE select (type 8 for 8-bit mode, 4 for 4-bit mode  */
-#define MODE 4
+#define MODE 8
 
 #define NO_LINES 2
 #define NO_CHARS 16
@@ -17,7 +17,7 @@
 #define RS PIN0
 #define RW PIN1
 #define EN  PIN2
-#define LCD_CTRL_PORT PORTC
+#define LCD_CTRL_PORT PORTB
 #define LCD_DATA_PORT PORTA
 
 

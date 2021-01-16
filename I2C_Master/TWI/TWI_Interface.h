@@ -48,6 +48,7 @@ u8 TWI_SendLast(void);
 u8 TWI_Master_TX(u8 data, u8 slave_addr);
 u8 TWI_Master_RX(u8 slave_addr);
 
+u8 TWI_Slave_Listen(void); /* TODO */
 u8 TWI_Slave_TX(u8 data); /*  TODO */
 u8 TWI_Slave_RX(u8 *data); /*  TODO */
 

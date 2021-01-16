@@ -12,11 +12,12 @@
 #include "TWI_Config.h"
 #include "TWI_Interface.h"
 #include "TWI_Register.h"
-#include "queue_buffer.h"
+
+//#include "queue_buffer.h"
 
 u8 lastTransOK = 0 ;
 
-static u8 TWI_status=0 ;
+//static u8 TWI_status=0 ;
 static Bool TWI_Busy = false;
 static u8 TWI_TargetSlaveAddress;
 
@@ -67,8 +68,9 @@ void TWI_VidSetBitRate(u32 bit_rate)
 	{
 		TWBR = (u8)TWBR_VAL;
 	}
-
-	//TWBR = 32;
+#if TWI_FORCE_BITRATE_VALUE==ENABLE
+	TWBR = TWI_BITRATE_VALUE;
+#endif
 
 
 }
@@ -79,7 +81,7 @@ void TWI_VidSetBitRate(u32 bit_rate)
 void TWI_VidInit(void)
 {
 
-/*  Enable of I2C Interrupt */
+	/*  Enable of I2C Interrupt */
 
 #if TWI_Interrupt_Enable == ENABLE
 	SET_BIT(TWCR,TWIE );
@@ -90,24 +92,31 @@ void TWI_VidInit(void)
 #elif TWI_Interrupt_Enable == DISABLE
 	CLR_BIT(TWCR,TWIE);
 #endif
-/* set bit rate */
+	/* set bit rate */
 
 	TWI_VidSetBitRate(SCL_FREQ);
 
-/* Enable of I2C */
+	/* Enable of I2C */
 
 	TWAR = (TWI_OWN_SLAVE_ADDRESS<<1);
 
+
+
 #if TWI_Enable == ENABLE
-SET_BIT(TWCR , TWEN);
+	#if TWI_ALWAYS_SLAVE==YES
+		TWI_ACK();
+	#else
+		TWI_CLR_INT_FLAG();
+	#endif
+//	SET_BIT(TWCR , TWEN);
 
 #elif TWI_Enable == DISABLE
-CLR_BIT(TWCR , TWEN);
+	CLR_BIT(TWCR , TWEN);
 
 #endif
 
 
-///TWDR = 0xFF ; //default value on bus (bec 1 is the recessive bit)
+	///TWDR = 0xFF ; //default value on bus (bec 1 is the recessive bit)
 
 }
 
@@ -117,16 +126,16 @@ u8 TWI_SendSlaveAddress(u8 slave_addr, u8 rw)
 
 	TWDR = (slave_addr<<1) | rw ; // OR with 0x00 for Write operation
 
-		/* as soon as the flag is cleared transmission begins */
-		TWI_CLR_INT_FLAG();
-		CLR_BIT(TWCR,BIT(TWSTA));
+	/* as soon as the flag is cleared transmission begins */
+	TWI_CLR_INT_FLAG();
+	CLR_BIT(TWCR,BIT(TWSTA));
 
-		//4. wait for flag to set
-		/*wait for flag */
-		while(TWI_CheckFlag() == 0)
-		{/*wait for slave address to be sent */}
-		status = TWI_u8GetStatus();
-		return status ;
+	//4. wait for flag to set
+	/*wait for flag */
+	while(TWI_CheckFlag() == 0)
+	{/*wait for slave address to be sent */}
+	status = TWI_u8GetStatus();
+	return status ;
 }
 
 u8 TWI_SendData(u8 data)
@@ -144,10 +153,10 @@ u8 TWI_SendData(u8 data)
 
 u8 TWI_ReadDataACK(void)
 {
-//	TWI_CLR_INT_FLAG();
+	//	TWI_CLR_INT_FLAG();
 	TWI_ACK();
 	/*wait for flag */
-//	while(TWI_CheckFlag() == 0)
+	//	while(TWI_CheckFlag() == 0)
 	while (!(TWCR & (1 << TWINT)))
 	{/*wait for data to be recieved */}
 
@@ -160,7 +169,7 @@ u8 TWI_ReadDataNACK(void)
 	TWI_CLR_INT_FLAG();
 	TWI_NACK();
 	/*wait for flag */
-//	while(TWI_CheckFlag() == 0)
+	//	while(TWI_CheckFlag() == 0)
 	while (!(TWCR & (1 << TWINT)))
 	{/*wait for data to be recieved */}
 
@@ -171,7 +180,7 @@ u8 TWI_ReadDataNACK(void)
 u8 TWI_Start_TRX(void)
 {
 	u8 status = 0;
-//send a start condition signal
+	//send a start condition signal
 	TWI_START();
 
 	/*wait for flag */
@@ -185,7 +194,7 @@ u8 TWI_Start_TRX(void)
 u8 TWI_RepeatedStart_TRX(void)
 {
 	u8 status = 0;
-//send a start condition signal
+	//send a start condition signal
 	TWI_START();
 
 	/*wait for flag */
@@ -276,6 +285,116 @@ u8 TWI_Master_RX(u8 slave_addr)
 	return rx;
 }
 
+u8 TWI_Slave_Listen(void)
+{
+	while(1)
+	{
+		u8 status;							/* Declare variable */
+		while (!(TWCR & (1<<TWINT)))
+		{/* Wait to be addressed */}
+
+		status = TWI_u8GetStatus();					/* Read TWI status register with masking lower three bits */
+		if (status == TWI_SRX_SLAW_ACK || status == TWI_ARB_LOST_SLAW_ACK)
+		{
+			/* Check weather own SLA+W received & ack returned (TWEA = 1) */
+			return 0;
+		}
+											/* If yes then return 0 to indicate ack returned */
+		if (status == TWI_SRX_SLAR_ACK || status == TWI_ARB_LOST_SLAR_ACK)
+		{
+			/* Check weather own SLA+R received & ack returned (TWEA = 1) */
+			return 1;
+		}
+											/* If yes then return 1 to indicate ack returned */
+		if (status == TWI_SRX_GENCALL_ACK || status == TWI_ARB_LOST_GENCALL_ACK)
+		{
+			/* Check weather general call received & ack returned (TWEA = 1) */
+			return 2;
+		}
+											/* If yes then return 2 to indicate ack returned */
+		else
+		{
+			continue;
+		}
+
+	}
+	return 0;
+}
+
+u8 TWI_Slave_TX(u8 data)
+{
+	u8 status;
+	TWDR = data;								/* Write data to TWDR to be transmitted */
+	TWCR = (1<<TWEN)|(1<<TWINT)|(1<<TWEA);		/* Enable TWI and clear interrupt flag */
+	while (!(TWCR & (1<<TWINT)))
+	{
+		/* Wait until TWI finish its current
+	 	 job (Write operation) */
+	}
+
+	status = TWI_u8GetStatus();						/* Read TWI status register with masking lower three bits */
+	if (status == TWI_SRX_STOP_COND)							/* Check weather STOP/REPEATED START received */
+	{
+		TWCR |= (1<<TWINT);						/* If yes then clear interrupt flag & return -1 */
+		return -1;
+	}
+	if (status == TWI_STX_DATA_ACK)							/* Check weather data transmitted & ack received */
+	{
+		return 0;
+	}									/* If yes then return 0 */
+	if (status == TWI_STX_DATA_NACK)							/* Check weather data transmitted & nack received */
+	{
+		TWCR |= (1<<TWINT);						/* If yes then clear interrupt flag & return -2 */
+		return -2;
+	}
+	if (status == TWI_STX_LAST_BYTE_ACK)							/* If last data byte transmitted with ack received TWEA = 0 */
+	{
+		return -3;
+	}									/* If yes then return -3 */
+	else
+	{
+		return -4;
+	}
+}
+
+u8 TWI_Slave_RX(u8 *data)
+{
+	u8 status;								/* Declare variable */
+	TWCR=(1<<TWEN)|(1<<TWEA)|(1<<TWINT);		/* Enable TWI, generation of ack and clear interrupt flag */
+	while (!(TWCR & (1<<TWINT)))
+	{
+		/* Wait until TWI finish
+		 * its current job (read operation) */
+	}
+	status = TWI_u8GetStatus();						/* Read TWI status register with masking lower three bits */
+	if (status == TWI_SRX_DATA_ACK || status == TWI_SRX_GENCALLDATA_ACK)
+	{
+		/* Check weather data received & ack returned (TWEA = 1) */
+		*data=TWDR;
+		return 0;
+	}
+										/* If yes then return received data */
+	if (status == TWI_SRX_DATA_NACK || status == TWI_SRX_GENCALLDATA_NACK)
+	{
+		/* Check weather data received, nack returned and switched to not addressed slave mode */
+		*data=TWDR;
+		return 0;
+	}
+										/* If yes then return received data */
+	if (status == TWI_SRX_STOP_COND)							/* Check weather STOP/REPEATED START received */
+	{
+		TWCR |= (1<<TWINT);						/* If yes then clear interrupt flag & return 0 */
+		return -1;
+	}
+	else
+	{
+		return -2;
+	}
+
+}
+
+
+
 
 void TWI_SetSlaveAddress(u8 sla, u8 rw)
 {
@@ -285,56 +404,56 @@ void TWI_SetSlaveAddress(u8 sla, u8 rw)
 
 
 
-
+#if TWI_Interrupt_Enable==ENABLE
 void __vector_19(void)
 {
 
 	TWI_status = TWI_u8GetStatus();
 	switch(TWI_status);
 	{
-case  TWI_MTX_START:  // start condition transmitted
-case  TWI_MTX_REP_START:
-	TWI_Busy = true;  // communication started so we are busy
-	// send slave address;
-	TWDR = TWI_TargetSlaveAddress;
-	// clear flag
-	TWI_CLR_INT_FLAG_WITH_INT();
-	break;
-case  TWI_MTX_SLAW_ACK	: // master wants to write to slave, slave ACKed
-	TWDR = queue_Pop(&tx_buf); // pop front element from buffer
-	// clear flag
-	TWI_CLR_INT_FLAG_WITH_INT();
-	break;
-case  TWI_MTX_SLAW_NACK	:	break;
-case  TWI_MTX_SLAR_ACK	:	break;
-case  TWI_MTX_SLAR_NACK	:	break;
-case  TWI_MTX_DATA_ACK	:	break;
-case  TWI_MTX_DATA_NACK	:	break;
-case  TWI_MRX_DATA_ACK	:	break;
-case  TWI_MRX_DATA_NACK	:	break;
+	case  TWI_MTX_START:  // start condition transmitted
+	case  TWI_MTX_REP_START:
+		TWI_Busy = true;  // communication started so we are busy
+		// send slave address;
+		TWDR = TWI_TargetSlaveAddress;
+		// clear flag
+		TWI_CLR_INT_FLAG_WITH_INT();
+		break;
+	case  TWI_MTX_SLAW_ACK	: // master wants to write to slave, slave ACKed
+		TWDR = queue_Pop(&tx_buf); // pop front element from buffer
+		// clear flag
+		TWI_CLR_INT_FLAG_WITH_INT();
+		break;
+	case  TWI_MTX_SLAW_NACK	:	break;
+	case  TWI_MTX_SLAR_ACK	:	break;
+	case  TWI_MTX_SLAR_NACK	:	break;
+	case  TWI_MTX_DATA_ACK	:	break;
+	case  TWI_MTX_DATA_NACK	:	break;
+	case  TWI_MRX_DATA_ACK	:	break;
+	case  TWI_MRX_DATA_NACK	:	break;
 
-case  TWI_SRX_SLAW_ACK	:	break;
-case  TWI_SRX_SLAR_ACK	:	break;
-case  TWI_SRX_GENCALL_ACK:	break;
-case  TWI_SRX_DATA_ACK	:	break;
-case  TWI_SRX_DATA_NACK	:	break;
-case  TWI_SRX_GENCALLDATA_ACK:	break;
-case  TWI_SRX_GENCALLDATA_NACK	:	break;
-case  TWI_SRX_STOP_COND	:	break;
-case  TWI_STX_DATA_ACK	:	break;
-case  TWI_STX_DATA_NACK	:	break;
+	case  TWI_SRX_SLAW_ACK	:	break;
+	case  TWI_SRX_SLAR_ACK	:	break;
+	case  TWI_SRX_GENCALL_ACK:	break;
+	case  TWI_SRX_DATA_ACK	:	break;
+	case  TWI_SRX_DATA_NACK	:	break;
+	case  TWI_SRX_GENCALLDATA_ACK:	break;
+	case  TWI_SRX_GENCALLDATA_NACK	:	break;
+	case  TWI_SRX_STOP_COND	:	break;
+	case  TWI_STX_DATA_ACK	:	break;
+	case  TWI_STX_DATA_NACK	:	break;
 
 
-case  TWI_ARB_LOST	:	break;
+	case  TWI_ARB_LOST	:	break;
 
-case  TWI_ARB_LOST_SLAW_ACK	:	break;
-case  TWI_ARB_LOST_SLAR_ACK	:	break;
-case  TWI_ARB_LOST_GENCALL_ACK	:	break;
-case  BUS_ERROR	:	break;
-case  NO_INFO	:	break;
+	case  TWI_ARB_LOST_SLAW_ACK	:	break;
+	case  TWI_ARB_LOST_SLAR_ACK	:	break;
+	case  TWI_ARB_LOST_GENCALL_ACK	:	break;
+	case  BUS_ERROR	:	break;
+	case  NO_INFO	:	break;
 
 
 	}
 
 }
-
+#endif

@@ -41,8 +41,8 @@
 #define TWSR (*(volatile u8 *)(0x21))
 #define TWBR (*(volatile u8 *)(0x20))
 
-
+#if TWI_Interrupt_Enable==ENABLE
 void __vector_19(void) __attribute__((signal));
-
+#endif
 
 #endif /* TWI_REGISTER_H_ */
