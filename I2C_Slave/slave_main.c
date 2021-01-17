@@ -17,7 +17,7 @@
 
 
 
-u8 buffer[SLAVE_BUFFER_SIZE]={'A','B','C','D'};
+u8 buffer[SLAVE_BUFFER_SIZE]={0};
 u8 CGram_buffer[CGRAM_BUFFER_SIZE]={0};
 
 u8 byte1=0,byte2=0;

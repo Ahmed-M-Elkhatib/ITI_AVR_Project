@@ -42,23 +42,16 @@ int main(void)
 		LCDI2C_SendCommand(CLEAR_DISPLAY);
 		_delay_ms(2000);
 		LCDI2C_SetCursorPosition(0,0);
-
-
-
 		/* sine wave */
 		u8 n = 15;
 		u8 line_no= 0;
 
 		for(int i=0; i<24;i++)
 		{
-
-
 			LCDI2C_SendCommand(CLEAR_DISPLAY);
 			LCDI2C_SetCursorPosition(n,line_no);
 			LCDI2C_PrintString("Khatib");
 			_delay_ms(500);
-
-
 			if(n<0)
 			{
 				n = 15;
@@ -77,16 +70,12 @@ int main(void)
 
 		for(int i=0; i<24;i++)
 		{
-
-
 			LCDI2C_SendCommand(CLEAR_DISPLAY);
 			LCDI2C_SetCursorPosition(n,line_no);
 			LCDI2C_SendData(0);
 			LCDI2C_PrintString("Rana");
 			LCDI2C_SendData(0);
 			_delay_ms(500);
-
-
 			if(n>15)
 			{
 				n = 0;
@@ -100,6 +89,7 @@ int main(void)
 		LCDI2C_SendCommand(CLEAR_DISPLAY);
 		_delay_ms(2000);
 		LCDI2C_SetCursorPosition(0,0);
+		/* UART */
 		LCDI2C_PrintString("Uart RX:");
 		LCDI2C_SetCursorPosition(0,1);
 		UART_scanf(uart_buffer,50);
@@ -107,8 +97,6 @@ int main(void)
 		_delay_ms(2000);
 		LCDI2C_SetCursorPosition(0,0);
 		LCDI2C_SendCommand(CLEAR_DISPLAY);
-
-
 	}
 
 return 0;
